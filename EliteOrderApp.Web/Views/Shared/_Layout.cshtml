@@ -16,17 +16,17 @@
 
 </head>
 <body>
-<partial name="_Loader"/>
-<partial name="_Header"/>
-<div class="pcoded-main-container">
-    @RenderBody()
-</div>
-<partial name="_Footer"/>
+    <partial name="_Loader" />
+    <partial name="_Header" />
+    <div class="pcoded-main-container">
+        @RenderBody()
+    </div>
+    <partial name="_Footer" />
 
-<script src="assets/js/vendor-all.min.js"></script>
-<script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
-<script src="assets/js/pcoded.min.js"></script>
+    <script src="assets/js/vendor-all.min.js"></script>
+    <script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/js/pcoded.min.js"></script>
 
-@await RenderSectionAsync("Scripts", required: false)
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
