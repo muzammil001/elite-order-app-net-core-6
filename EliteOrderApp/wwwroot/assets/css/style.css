@@ -1889,21 +1889,21 @@ p.text-muted {
 /* Pre-loader css end */
 /* header css start */
 .pcoded-header {
-  z-index: 1028;
-  position: relative;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  min-height: 70px;
-  padding: 0;
-  position: relative;
-  top: 0;
-  background: transparent;
-  color: #3f4d67;
-  width: calc(100% - 264px);
-  margin-left: 264px;
-  -webkit-transition: all 0.3s ease-in-out;
-  transition: all 0.3s ease-in-out;
+    z-index: 1028;
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    min-height: 70px;
+    padding: 0;
+    position: relative;
+    top: 0;
+    background: #212224;
+    color: #E5DFAF;
+    width: calc(100% - 264px);
+    margin-left: 264px;
+    -webkit-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
 }
 .pcoded-header .m-header {
   display: none;
@@ -1924,7 +1924,7 @@ p.text-muted {
 .pcoded-header .input-group .input-group-text,
 .pcoded-header a,
 .pcoded-header dropdown-toggle {
-  color: #3f4d67;
+  color: whitesmoke;
 }
 .pcoded-header .input-group .input-group-text:hover,
 .pcoded-header a:hover,

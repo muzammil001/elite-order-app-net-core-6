@@ -5,6 +5,10 @@ VisualStudioVersion = 17.3.32922.545
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EliteOrderApp", "EliteOrderApp\EliteOrderApp.csproj", "{C2C0A7DC-FE98-4528-9747-7C91BE85C8FC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EliteOrderApp.Domain", "EliteOrderApp.Domain\EliteOrderApp.Domain.csproj", "{9FB9949E-F4CB-4BEB-9F4E-F98E8679DA3E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EliteOrderApp.Database", "EliteOrderApp.Database\EliteOrderApp.Database.csproj", "{65B80D51-E132-4785-A218-101F7687017E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{C2C0A7DC-FE98-4528-9747-7C91BE85C8FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C2C0A7DC-FE98-4528-9747-7C91BE85C8FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C2C0A7DC-FE98-4528-9747-7C91BE85C8FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9FB9949E-F4CB-4BEB-9F4E-F98E8679DA3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9FB9949E-F4CB-4BEB-9F4E-F98E8679DA3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9FB9949E-F4CB-4BEB-9F4E-F98E8679DA3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9FB9949E-F4CB-4BEB-9F4E-F98E8679DA3E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65B80D51-E132-4785-A218-101F7687017E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65B80D51-E132-4785-A218-101F7687017E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65B80D51-E132-4785-A218-101F7687017E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65B80D51-E132-4785-A218-101F7687017E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
