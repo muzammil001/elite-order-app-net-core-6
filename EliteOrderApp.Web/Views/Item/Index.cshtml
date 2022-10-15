@@ -1,0 +1,8 @@
+﻿@(Html.DevExtreme().DataGrid()
+    .ID("gridContainer")
+    .Columns(columns =>
+    {
+        columns.Add().DataField("Name");
+    })
+    .DataSource(d => d.StaticJson().Url(Url.Action("GetItems","Item")).Key("ID"))
+    .ShowBorders(true))
