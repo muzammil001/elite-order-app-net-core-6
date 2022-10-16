@@ -1,6 +1,6 @@
 ﻿@using EliteOrderApp.Domain.Entities
 @{
-	ViewData["Title"] = "Items";
+	ViewData["Title"] = "Customers";
 }
 
 <!-- [ breadcrumb ] start -->
@@ -9,7 +9,7 @@
 		<div class="row align-items-center">
 			<div class="col-md-12">
 				<div class="page-header-title">
-					<h3 class="m-b-10">Items</h3>
+					<h3 class="m-b-10">Customers</h3>
 				</div>
 			</div>
 		</div>
@@ -19,18 +19,19 @@
 
 <div class="main-body">
 	<div class="page-wrapper">
-		@(Html.DevExtreme().DataGrid<Item>()
+		@(Html.DevExtreme().DataGrid<Customer>()
 
 			.Columns(columns =>
 			{
 				columns.Add().DataField("name");
+				columns.Add().DataField("contact");
 			})
 			.DataSource(d => d.WebApi()
-			.Controller("Item")
-			.LoadAction("GetItems")
-			.InsertAction("InsertItem")
-			.UpdateAction("UpdateItem")
-			.DeleteAction("DeleteItem")
+			.Controller("Customer")
+			.LoadAction("GetCustomers")
+			.InsertAction("InsertCustomer")
+			.UpdateAction("UpdateCustomer")
+			.DeleteAction("DeleteCustomer")
 			.Key("id"))
 			.ShowBorders(true)
 			.ShowColumnLines(true)
