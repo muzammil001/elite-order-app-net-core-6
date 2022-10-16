@@ -19,33 +19,62 @@
 
 <div class="main-body">
 	<div class="page-wrapper">
-		@(Html.DevExtreme().DataGrid<Customer>()
+		@(
+			Html.DevExtreme().DataGrid<Customer>()
 
-			.Columns(columns =>
-			{
-				columns.Add().DataField("name");
-				columns.Add().DataField("contact");
-			})
-			.DataSource(d => d.WebApi()
-			.Controller("Customer")
-			.LoadAction("GetCustomers")
-			.InsertAction("InsertCustomer")
-			.UpdateAction("UpdateCustomer")
-			.DeleteAction("DeleteCustomer")
-			.Key("id"))
-			.ShowBorders(true)
-			.ShowColumnLines(true)
-			.SearchPanel(searchPanel => searchPanel.Visible(true))
-			.ShowRowLines(true)
-			.RepaintChangesOnly(true)
-			.Scrolling(s => s.Mode(GridScrollingMode.Virtual))
-			.Editing(e => e
-			.Mode(GridEditMode.Cell)
-			.RefreshMode(GridEditRefreshMode.Reshape)
-			.AllowAdding(true)
-			.AllowDeleting(true)
-			.AllowUpdating(true)
-			))
+				.Columns(columns =>
+				{
+					columns.AddFor(m => m.Name).DataField("name");
+					columns.AddFor(m => m.Contact).DataField("contact"); ;
+
+				})
+				.DataSource(d => d.WebApi()
+				.Controller("Customer")
+				.LoadAction("GetCustomers")
+				.InsertAction("InsertCustomer")
+				.UpdateAction("UpdateCustomer")
+				.DeleteAction("DeleteCustomer")
+				.Key("id"))
+				.ShowBorders(true)
+				.ShowColumnLines(true)
+				.SearchPanel(searchPanel => searchPanel.Visible(true))
+				.ShowRowLines(true)
+				.RepaintChangesOnly(true)
+				.Scrolling(s => s.Mode(GridScrollingMode.Virtual))
+				.Editing(e => e
+				.Mode(GridEditMode.Popup)
+				.RefreshMode(GridEditRefreshMode.Reshape)
+				.AllowAdding(true)
+				.AllowDeleting(true)
+				.AllowUpdating(true)
+				.Popup(p => p
+				.Title("Customer Info")
+				.ShowTitle(true)
+				.Width(500)
+				.Height(250))
+				.Form(f => f.Items(items =>
+				{
+					items.AddGroup()
+					.ColCount(2)
+					.ColSpan(2)
+					.Items(groupItems =>
+					{
+						groupItems.AddSimpleFor(m => m.Name).DataField("name");
+						groupItems.AddSimpleFor(m => m.Contact).Editor(e => e
+					.TextBox()
+					.Mask("0000-0000000")
+					.MaskRules(new { X = new JS("/[02-9]/") })
+					).DataField("contact"); 
+
+					});
+
+				})))
+				.Summary(s=>s.TotalItems(items =>{
+					items.AddFor(x => x.Name)
+					.SummaryType(SummaryType.Count)
+					.DisplayFormat("Total Customers : {0}");
+				}))
+			)
 	</div>
 </div>
 @section Scripts{

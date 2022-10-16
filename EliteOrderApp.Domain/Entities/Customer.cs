@@ -1,4 +1,6 @@
-﻿namespace EliteOrderApp.Domain.Entities
+﻿using Newtonsoft.Json;
+
+namespace EliteOrderApp.Domain.Entities
 {
     public class Customer
     {
