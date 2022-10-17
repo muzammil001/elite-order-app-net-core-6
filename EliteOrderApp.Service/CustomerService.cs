@@ -29,6 +29,11 @@ public class CustomerService
         return CustomerInDb;
     }
 
+    public bool CheckCustomer(string mobileNumber)
+    {
+      return  _context.Customers.Any(x=>x.Contact==mobileNumber);
+    }
+
     public void UpdateCustomer()
     {
         _context.SaveChanges();

@@ -21,7 +21,6 @@
 	<div class="page-wrapper">
 		@(
 			Html.DevExtreme().DataGrid<Customer>()
-
 				.Columns(columns =>
 				{
 					columns.AddFor(m => m.Name).DataField("name");

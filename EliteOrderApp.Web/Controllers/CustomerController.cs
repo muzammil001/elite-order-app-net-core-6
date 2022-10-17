@@ -36,6 +36,12 @@ namespace EliteOrderApp.Web.Controllers
 
             if (!TryValidateModel(customer))
                 return BadRequest(ModelState.GetFullErrorMessage());
+
+            if (_customerService.CheckCustomer(customer.Contact))
+            {
+                return BadRequest("Customer is already exists with same number.");
+            }
+
             _customerService.NewCustomer(customer);
             return Ok(customer);
         }
