@@ -14,6 +14,7 @@ namespace EliteOrderApp.Database
         {
 
         }
+        public DbSet<Cart> CartItems { get; set; }
         public DbSet<Item> Items { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Order> Orders { get; set; }
