@@ -13,9 +13,9 @@ public class CustomerService
         _context = context;
     }
 
-    public ICollection<Customer> GetAll()
+    public async Task<ICollection<Customer>> GetAll()
     {
-        return _context.Customers.ToList();
+        return await _context.Customers.ToListAsync();
     }
 
     public void NewCustomer(Customer customer)
@@ -29,9 +29,9 @@ public class CustomerService
         return CustomerInDb;
     }
 
-    public bool CheckCustomer(string mobileNumber)
+    public async Task<bool> CheckCustomer(string mobileNumber)
     {
-      return  _context.Customers.Any(x=>x.Contact==mobileNumber);
+      return await  _context.Customers.AnyAsync(x=>x.Contact==mobileNumber);
     }
 
     public void UpdateCustomer()
@@ -39,13 +39,13 @@ public class CustomerService
         _context.SaveChanges();
     }
 
-    public void DeleteCustomer(int id)
+    public async Task DeleteCustomer(int id)
     {
-        var Customer = _context.Customers.FirstOrDefault(x => x.Id == id);
-        if (Customer != null)
+        var customer = await _context.Customers.FirstOrDefaultAsync(x => x.Id == id);
+        if (customer != null)
         {
-            _context.Remove(Customer);
-            _context.SaveChanges();
+            _context.Remove(customer);
+            await _context.SaveChangesAsync();
         }
     }
 }
