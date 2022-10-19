@@ -13,16 +13,17 @@ public class ItemService
         _context = context;
     }
 
-    public ICollection<Item> GetAll()
+    public async Task<ICollection<Item>> GetAll()
     {
-        return _context.Items.ToList();
+        return await _context.Items.ToListAsync();
     }
 
-    public void NewItem(Item item)
+    public async Task NewItem(Item item)
     {
         _context.Items.Add(item);
-        _context.SaveChanges();
+        await _context.SaveChangesAsync();
     }
+
     public async Task<Item?> GetItem(int key)
     {
         var itemInDb = await _context.Items.FirstOrDefaultAsync(x => x.Id == key);
@@ -34,13 +35,13 @@ public class ItemService
         _context.SaveChanges();
     }
 
-    public void DeleteItem(int id)
+    public async Task DeleteItem(int id)
     {
         var item = _context.Items.FirstOrDefault(x => x.Id == id);
         if (item != null)
         {
             _context.Remove(item);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
     }
 }

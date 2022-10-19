@@ -9,6 +9,8 @@ namespace EliteOrderApp.WebApi.Configs
 		public MappingProfile()
 		{
 			CreateMap<Customer, CustomerDto>().ReverseMap();
+			CreateMap<Item, ItemDto>().ReverseMap();
+			CreateMap<Cart, CartDto>().ReverseMap();
 		}
 	}
 }

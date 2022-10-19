@@ -63,7 +63,7 @@ namespace EliteOrderApp.WebApi.Controllers
         [HttpPut]
         [SwaggerOperation(Summary = "Update Customer")]
         [Route("UpdateCusotmer")]
-        public async Task<IActionResult> DeleteCustomer(CustomerDto customerDto)
+        public async Task<IActionResult> UpdateCustomer(CustomerDto customerDto)
         {
             var customerInDb = await _customerService.GetCustomer(customerDto.Id);
             if (customerInDb == null)

@@ -9,45 +9,51 @@ using System.Threading.Tasks;
 
 namespace EliteOrderApp.Service
 {
-	public class CartService
-	{
+    public class CartService
+    {
         private readonly AppDbContext _context;
 
         public CartService(AppDbContext context)
         {
             _context = context;
         }
-        public ICollection<Cart> GetAll()
+        public async Task<ICollection<Cart>> GetAll()
         {
-            return _context.CartItems.Include(x=>x.Item).ToList();
+            return await _context.CartItems.Include(x => x.Item).ToListAsync();
         }
+
         public async Task<Cart?> GetItem(int key)
         {
             var itemInDb = await _context.CartItems.FirstOrDefaultAsync(x => x.Id == key);
             return itemInDb;
         }
-        public void AddItemInCart(Item item)
+        public async Task AddItemInCart(Cart item)
         {
             var cartItem = new Cart()
             {
-                ItemId = item.Id,
+                ItemId = item.ItemId,
             };
             _context.CartItems.Add(cartItem);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
-        public void UpdateCart()
+        public async Task<bool> IsItemExists(int itemId)
         {
-            _context.SaveChanges();
+            return await _context.CartItems.AnyAsync(x => x.ItemId == itemId);
         }
 
-        public void DeleteCartItem(int id)
+        public async Task UpdateCart()
         {
-            var item = _context.CartItems.FirstOrDefault(x => x.Id == id);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteCartItem(int id)
+        {
+            var item = await _context.CartItems.FirstOrDefaultAsync(x => x.Id == id);
             if (item != null)
             {
                 _context.Remove(item);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
         }
     }
