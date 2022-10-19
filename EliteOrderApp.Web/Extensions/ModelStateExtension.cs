@@ -2,8 +2,8 @@
 
 namespace EliteOrderApp.Web.Extensions
 {
-	static class ModelStateExtension
-	{
+    static class ModelStateExtension
+    {
         public static string GetFullErrorMessage(this ModelStateDictionary modelState)
         {
             var messages = new List<string>();
@@ -14,7 +14,7 @@ namespace EliteOrderApp.Web.Extensions
                     messages.Add(error.ErrorMessage);
             }
 
-            return String.Join(" ", messages);
+            return string.Join(" ", messages);
         }
     }
 }

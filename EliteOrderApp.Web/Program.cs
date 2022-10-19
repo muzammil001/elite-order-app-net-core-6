@@ -11,6 +11,7 @@ builder.Services.AddDbContext<AppDbContext>(x => x.UseSqlServer(builder.Configur
 builder.Services.AddTransient<ItemService>();
 builder.Services.AddTransient<CustomerService>();
 builder.Services.AddTransient<CartService>();
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 
 
@@ -34,4 +35,8 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers();
+});
 app.Run();

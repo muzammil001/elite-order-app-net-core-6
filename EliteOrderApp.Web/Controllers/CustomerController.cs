@@ -22,47 +22,6 @@ namespace EliteOrderApp.Web.Controllers
 			return View();
 		}
 
-        [HttpGet]
-        public object GetCustomers(DataSourceLoadOptions loadOptions)
-        {
-            return DataSourceLoader.Load(_customerService.GetAll(), loadOptions);
-        }
-
-        [HttpPost]
-        public IActionResult InsertCustomer(string values)
-        {
-            var customer = new Customer();
-            JsonConvert.PopulateObject(values, customer);
-
-            if (!TryValidateModel(customer))
-                return BadRequest(ModelState.GetFullErrorMessage());
-
-            if (_customerService.CheckCustomer(customer.Contact))
-            {
-                return BadRequest("Customer is already exists with same number.");
-            }
-
-            _customerService.NewCustomer(customer);
-            return Ok(customer);
-        }
-
-        [HttpPut]
-        public async Task<IActionResult> UpdateCustomer(int key, string values)
-        {
-            var customer = await _customerService.GetCustomer(key);
-            JsonConvert.PopulateObject(values, customer);
-
-            if (!TryValidateModel(customer))
-                return BadRequest(ModelState.GetFullErrorMessage());
-
-            _customerService.UpdateCustomer();
-            return Ok(customer);
-        }
-
-        [HttpDelete]
-        public void DeleteCustomer(int key)
-        {
-            _customerService.DeleteCustomer(key);
-        }
+      
     }
 }

@@ -2,13 +2,12 @@
 using EliteOrderApp.Domain.Entities;
 using EliteOrderApp.Service;
 using EliteOrderApp.WebApi.Dtos;
-using EliteOrderApp.WebApi.Extensions;
+using EliteOrderApp.Web.Extensions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using Swashbuckle.AspNetCore.Annotations;
 
-namespace EliteOrderApp.WebApi.Controllers
+namespace EliteOrderApp.Web.Controllers.api
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -24,7 +23,6 @@ namespace EliteOrderApp.WebApi.Controllers
         }
 
         [HttpGet]
-        [SwaggerOperation(Summary = "Get All Customers")]
         [Route("GetCusotmers")]
         public async Task<IActionResult> GetCustomers()
         {
@@ -33,7 +31,6 @@ namespace EliteOrderApp.WebApi.Controllers
         }
 
         [HttpGet]
-        [SwaggerOperation(Summary = "Get Customer")]
         [Route("GetCusotmer/{id}")]
         public async Task<IActionResult> GetCustomer(int id)
         {
@@ -42,7 +39,6 @@ namespace EliteOrderApp.WebApi.Controllers
         }
 
         [HttpPost]
-        [SwaggerOperation(Summary = "Create Customer")]
         [Route("CreateCusotmer")]
         public async Task<IActionResult> CreateCustomer(CustomerDto customerDto)
         {
@@ -61,7 +57,6 @@ namespace EliteOrderApp.WebApi.Controllers
         }
 
         [HttpPut]
-        [SwaggerOperation(Summary = "Update Customer")]
         [Route("UpdateCusotmer")]
         public async Task<IActionResult> UpdateCustomer(CustomerDto customerDto)
         {
@@ -76,7 +71,6 @@ namespace EliteOrderApp.WebApi.Controllers
         }
 
         [HttpDelete]
-        [SwaggerOperation(Summary = "Delete Customer")]
         [Route("DeleteCusotmer/{id}")]
         public async Task<IActionResult> DeleteCustomer(int id)
         {

@@ -1,13 +1,12 @@
 ﻿using AutoMapper;
 using EliteOrderApp.Domain.Entities;
 using EliteOrderApp.Service;
+using EliteOrderApp.Web.Extensions;
 using EliteOrderApp.WebApi.Dtos;
-using EliteOrderApp.WebApi.Extensions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Swashbuckle.AspNetCore.Annotations;
 
-namespace EliteOrderApp.WebApi.Controllers
+namespace EliteOrderApp.Web.Controllers.api
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -22,7 +21,6 @@ namespace EliteOrderApp.WebApi.Controllers
         }
 
         [HttpGet]
-        [SwaggerOperation(Summary = "Get All Cart Items")]
         [Route("GetCartItems")]
         public async Task<IActionResult> GetCartItems()
         {
@@ -32,7 +30,6 @@ namespace EliteOrderApp.WebApi.Controllers
 
 
         [HttpGet]
-        [SwaggerOperation(Summary = "Get Cart Item")]
         [Route("GetCartItem/{id}")]
         public async Task<IActionResult> GetCartItem(int id)
         {
@@ -46,7 +43,6 @@ namespace EliteOrderApp.WebApi.Controllers
 
 
         [HttpPost]
-        [SwaggerOperation(Summary = "Add Item in cart")]
         [Route("AddItemInCart")]
         public async Task<IActionResult> AddItemInCart(CartDto cartDto)
         {
@@ -64,7 +60,6 @@ namespace EliteOrderApp.WebApi.Controllers
         }
 
         [HttpDelete]
-        [SwaggerOperation(Summary = "Delete Cart Item")]
         [Route("DeleteCartItem/{id}")]
         public async Task<IActionResult> DeleteItem(int id)
         {
