@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using EliteOrderApp.Domain.Entities;
-using EliteOrderApp.WebApi.Dtos;
+using EliteOrderApp.Web.Dtos;
 
-namespace EliteOrderApp.WebApi.Configs
+namespace EliteOrderApp.Web.Configs
 {
 	public class MappingProfile:Profile
 	{

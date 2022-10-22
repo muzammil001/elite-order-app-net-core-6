@@ -26,7 +26,7 @@
 				columns.Add().DataField("name");
 			})
 			.DataSource(d => d.WebApi()
-			.Controller("Item")
+			.Controller("Items")
 			.LoadAction("GetItems")
 			.InsertAction("InsertItem")
 			.UpdateAction("UpdateItem")

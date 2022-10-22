@@ -1,4 +1,5 @@
-﻿@using EliteOrderApp.Domain.Entities
+﻿@model List<EliteOrderApp.Web.Dtos.CustomerDto>
+
 @{
 	ViewData["Title"] = "Customers";
 }
@@ -9,7 +10,7 @@
 		<div class="row align-items-center">
 			<div class="col-md-12">
 				<div class="page-header-title">
-					<h3 class="m-b-10">Customers</h3>
+					<h3 class="m-b-10"></h3>
 				</div>
 			</div>
 		</div>
@@ -19,64 +20,38 @@
 
 <div class="main-body">
 	<div class="page-wrapper">
-		@(
-			Html.DevExtreme().DataGrid<Customer>()
-				.Columns(columns =>
-				{
-					columns.AddFor(m => m.Name).DataField("name");
-					columns.AddFor(m => m.Contact).DataField("contact"); ;
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="card">
+					<div class="card-header">
+						<h2>Customers</h2>
+						<div class="">
+							<a class="btn btn-square btn-dark" style="color: white;font-weight: bolder">New Customer</a>
+						</div>
+					</div>
+					<div class="card-block" id="view-all">
+					<partial name="_CustomerList"/>
 
-				})
-				.DataSource(d => d.WebApi()
-				.Controller("Customer")
-				.LoadAction("GetCustomers")
-				.InsertAction("InsertCustomer")
-				.UpdateAction("UpdateCustomer")
-				.DeleteAction("DeleteCustomer")
-				.Key("id"))
-				.ShowBorders(true)
-				.ShowColumnLines(true)
-				.SearchPanel(searchPanel => searchPanel.Visible(true))
-				.ShowRowLines(true)
-				.RepaintChangesOnly(true)
-				.Scrolling(s => s.Mode(GridScrollingMode.Virtual))
-				.Editing(e => e
-				.Mode(GridEditMode.Popup)
-				.RefreshMode(GridEditRefreshMode.Reshape)
-				.AllowAdding(true)
-				.AllowDeleting(true)
-				.AllowUpdating(true)
-				.Popup(p => p
-				.Title("Customer Info")
-				.ShowTitle(true)
-				.Width(500)
-				.Height(250))
-				.Form(f => f.Items(items =>
-				{
-					items.AddGroup()
-					.ColCount(2)
-					.ColSpan(2)
-					.Items(groupItems =>
-					{
-						groupItems.AddSimpleFor(m => m.Name).DataField("name");
-						groupItems.AddSimpleFor(m => m.Contact).Editor(e => e
-					.TextBox()
-					.Mask("0000-0000000")
-					.MaskRules(new { X = new JS("/[02-9]/") })
-					).DataField("contact"); 
+					</div>
+				</div>
+			</div>
 
-					});
-
-				})))
-				.Summary(s=>s.TotalItems(items =>{
-					items.AddFor(x => x.Name)
-					.SummaryType(SummaryType.Count)
-					.DisplayFormat("Total Customers : {0}");
-				}))
-			)
+		</div>
 	</div>
+	
+	
 </div>
 @section Scripts{
+	<script>
+		$(document).ready(function () {
+			$('#customers').DataTable({
+			});
+		});
+	</script>
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+
 
 }
 

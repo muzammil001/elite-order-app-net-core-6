@@ -6,61 +6,21 @@
 	<title>@ViewData["Title"] - Elite Order App</title>
 
 	<!-- Favicon icon -->
-	<link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">
+	<link rel="icon" href="~/assets/images/favicon.ico" type="image/x-icon">
 	<!-- fontawesome icon -->
-	<link rel="stylesheet" href="assets/fonts/fontawesome/css/fontawesome-all.min.css">
+	<link rel="stylesheet" href="~/assets/fonts/fontawesome/css/fontawesome-all.min.css">
 	<!-- animation css -->
-	<link rel="stylesheet" href="assets/plugins/animation/css/animate.min.css">
+	<link rel="stylesheet" href="~/assets/plugins/animation/css/animate.min.css">
 	<!-- vendor css -->
-	<link rel="stylesheet" href="assets/css/style.css">
-	@* Uncomment to use the HtmlEditor control *@
-	@* <script src="https://unpkg.com/devextreme-quill@21_2/dist/dx-quill.min.js"></script> *@
+	<link rel="stylesheet" href="~/assets/css/style.css">
 
-	@* Uncomment to use the Gantt control *@
-	@*<link href="~/css/devextreme/dx-gantt.css" rel="stylesheet" />*@
+	<!-- data tables css -->
+	<link rel="stylesheet" href="~/assets/plugins/data-tables/css/datatables.min.css">
 
-	@* Uncomment to use the Diagram control *@
-	@*<link href="~/css/devextreme/dx-diagram.css" rel="stylesheet" />*@
+	<!-- modal-window-effects css -->
+	<link rel="stylesheet" href="assets/plugins/modal-window-effects/css/md-modal.css">
 
-	<link href="~/css/devextreme/bootstrap.css" rel="stylesheet" />
-
-	<link href="~/css/devextreme/dx.common.css" rel="stylesheet" />
-
-	@* Predefined themes: https://js.devexpress.com/DevExtreme/Guide/Themes_and_Styles/Predefined_Themes/ *@
-	<link href="~/css/devextreme/dx.light.css" rel="stylesheet" />
-
-	@* Uncomment to use the Gantt control *@
-	@*<script src="~/js/devextreme/dx-gantt.js"></script>*@
-
-	@* Uncomment to use the Diagram control *@
-	@*<script src="~/js/devextreme/dx-diagram.js"></script>*@
-
-	<script src="~/js/devextreme/jquery.js"></script>
-	<script src="~/js/devextreme/bootstrap.js"></script>
-
-	@* Uncomment to use Globalize for localization *@
-	@* Docs: https://docs.devexpress.com/AspNetCore/400577#globalize *@
-	@*<script src="~/js/devextreme/cldr.js"></script>*@
-	@*<script src="~/js/devextreme/cldr/event.js"></script>*@
-	@*<script src="~/js/devextreme/cldr/supplemental.js"></script>*@
-	@*<script src="~/js/devextreme/cldr/unresolved.js"></script>*@
-	@*<script src="~/js/devextreme/globalize.js"></script>*@
-	@*<script src="~/js/devextreme/globalize/message.js"></script>*@
-	@*<script src="~/js/devextreme/globalize/number.js"></script>*@
-	@*<script src="~/js/devextreme/globalize/currency.js"></script>*@
-	@*<script src="~/js/devextreme/globalize/date.js"></script>*@
-
-	@* Uncomment to enable client-side export *@
-	@*<script src="~/js/devextreme/jszip.js"></script>*@
-
-	<script src="~/js/devextreme/dx.all.js"></script>
-
-	@* Uncomment to provide geo-data for the VectorMap control *@
-	@* Docs: https://js.devexpress.com/DevExtreme/Guide/Widgets/VectorMap/Providing_Data/#Data_for_Areas *@
-	@*<script src="~/js/devextreme/vectormap-data/world.js"></script>*@
-
-	<script src="~/js/devextreme/aspnet/dx.aspnet.mvc.js"></script>
-	<script src="~/js/devextreme/aspnet/dx.aspnet.data.js"></script>
+	<partial name="_DevExpressLib" />
 </head>
 <body>
 	<partial name="_Loader" />
@@ -68,19 +28,32 @@
 	<section class="pcoded-main-container">
 		<div class="pcoded-wrapper">
 			<div class="pcoded-content">
-<div class="pcoded-inner-content">
+				<div class="pcoded-inner-content">
 
-				@RenderBody()
+					@RenderBody()
 
-			</div>
+				</div>
 			</div>
 		</div>
 	</section>
 	<partial name="_Footer" />
+<partial name="_Modal" />
 
-	<script src="assets/js/vendor-all.min.js"></script>
-	<script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
-	<script src="assets/js/pcoded.min.js"></script>
+	<script src="~/assets/js/vendor-all.min.js"></script>
+	<script src="~/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+	<script src="~/assets/js/pcoded.min.js"></script>
+
+	<!-- datatable Js -->
+	<script src="~/assets/plugins/data-tables/js/datatables.min.js"></script>
+	<script src="~/assets/js/pages/tbl-datatable-custom.js"></script>
+
+	<!-- modal-window-effects Js -->
+	<script src="~/assets/plugins/modal-window-effects/js/classie.js"></script>
+	<script src="~/assets/plugins/modal-window-effects/js/modalEffects.js"></script>
+
+	@*custom js*@
+	<script src="~/js/site.js"></script>
+	<script src="~/js/notify.js"></script>
 
 
 	@await RenderSectionAsync("Scripts", required: false)

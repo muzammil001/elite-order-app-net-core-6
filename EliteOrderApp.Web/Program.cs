@@ -1,5 +1,6 @@
 using EliteOrderApp.Database;
 using EliteOrderApp.Service;
+using EliteOrderApp.Web.Extensions;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +12,8 @@ builder.Services.AddDbContext<AppDbContext>(x => x.UseSqlServer(builder.Configur
 builder.Services.AddTransient<ItemService>();
 builder.Services.AddTransient<CustomerService>();
 builder.Services.AddTransient<CartService>();
+
+
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 

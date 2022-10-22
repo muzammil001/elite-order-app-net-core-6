@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using EliteOrderApp.Domain.Entities;
 using EliteOrderApp.Service;
-using EliteOrderApp.WebApi.Dtos;
+using EliteOrderApp.Web.Dtos;
 using EliteOrderApp.Web.Extensions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -23,7 +23,7 @@ namespace EliteOrderApp.Web.Controllers.api
         }
 
         [HttpGet]
-        [Route("GetCusotmers")]
+        [Route("GetCustomers")]
         public async Task<IActionResult> GetCustomers()
         {
             var list = await _customerService.GetAll();
@@ -31,7 +31,7 @@ namespace EliteOrderApp.Web.Controllers.api
         }
 
         [HttpGet]
-        [Route("GetCusotmer/{id}")]
+        [Route("GetCustomer/{id}")]
         public async Task<IActionResult> GetCustomer(int id)
         {
             var customer = await _customerService.GetCustomer(id);
@@ -39,7 +39,7 @@ namespace EliteOrderApp.Web.Controllers.api
         }
 
         [HttpPost]
-        [Route("CreateCusotmer")]
+        [Route("CreateCustomer")]
         public async Task<IActionResult> CreateCustomer(CustomerDto customerDto)
         {
 
@@ -57,7 +57,7 @@ namespace EliteOrderApp.Web.Controllers.api
         }
 
         [HttpPut]
-        [Route("UpdateCusotmer")]
+        [Route("UpdateCustomer")]
         public async Task<IActionResult> UpdateCustomer(CustomerDto customerDto)
         {
             var customerInDb = await _customerService.GetCustomer(customerDto.Id);
@@ -65,13 +65,13 @@ namespace EliteOrderApp.Web.Controllers.api
             {
                 return NotFound("Customer not found.");
             }
-            _mapper.Map(customerDto, customerInDb);
-            _customerService.UpdateCustomer();
+            var customer = _mapper.Map(customerDto, customerInDb);
+            _customerService.UpdateCustomer(customer);
             return NoContent();
         }
 
         [HttpDelete]
-        [Route("DeleteCusotmer/{id}")]
+        [Route("DeleteCustomer/{id}")]
         public async Task<IActionResult> DeleteCustomer(int id)
         {
             await _customerService.DeleteCustomer(id);

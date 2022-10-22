@@ -1,4 +1,4 @@
-﻿namespace EliteOrderApp.WebApi.Dtos
+﻿namespace EliteOrderApp.Web.Dtos
 {
     public class CartDto
     {

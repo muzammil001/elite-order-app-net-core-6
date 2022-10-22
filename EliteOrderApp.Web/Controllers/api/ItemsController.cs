@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using EliteOrderApp.Domain.Entities;
 using EliteOrderApp.Service;
+using EliteOrderApp.Web.Dtos;
 using EliteOrderApp.Web.Extensions;
-using EliteOrderApp.WebApi.Dtos;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
