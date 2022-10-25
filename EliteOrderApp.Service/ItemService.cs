@@ -30,8 +30,9 @@ public class ItemService
         return itemInDb;
     }
 
-    public void UpdateItem()
+    public void UpdateItem(Item item)
     {
+        _context.Items.Update(item);
         _context.SaveChanges();
     }
 

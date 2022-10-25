@@ -73,18 +73,10 @@ namespace EliteOrderApp.Web.Controllers
                     }
                     catch (DbUpdateConcurrencyException)
                     {
-                        var customer = _customerService.GetCustomer(customerDto.Id);
-                        if (customer == null)
-                        {
-                            return NotFound();
-                        }
-
-                        throw;
+                        return BadRequest();
                     }
                 }
-                var customers = await _customerService.GetAll();
-                var view = Helper.RenderRazorViewToString(this, "AddOrEdit", customers);
-                return Json(new { isValid = true, html = view });
+                return Json(new { isValid = true, html = "" });
             }
 
             return Json(new { isValid = false, html = Helper.RenderRazorViewToString(this, "AddOrEdit", customerDto) });

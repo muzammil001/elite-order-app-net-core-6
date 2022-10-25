@@ -43,7 +43,7 @@ namespace EliteOrderApp.Web.Controllers.api
         }
 
         [HttpPost]
-        [Route("CreateItem")]
+        [Route("create-item")]
         public async Task<IActionResult> CreateItem(ItemDto itemDto)
         {
 
@@ -56,7 +56,7 @@ namespace EliteOrderApp.Web.Controllers.api
         }
 
         [HttpPut]
-        [Route("UpdateItem")]
+        [Route("update-item")]
         public async Task<IActionResult> UpdateItem(ItemDto itemDto)
         {
             var itemInDb = await _itemService.GetItem(itemDto.Id);
@@ -64,13 +64,13 @@ namespace EliteOrderApp.Web.Controllers.api
             {
                 return NotFound("Item not found.");
             }
-            _mapper.Map(itemDto, itemInDb);
-            _itemService.UpdateItem();
+            var item = _mapper.Map(itemDto, itemInDb);
+            _itemService.UpdateItem(item);
             return NoContent();
         }
 
         [HttpDelete]
-        [Route("DeleteItem/{id}")]
+        [Route("delete-item/{id}")]
         public async Task<IActionResult> DeleteItem(int id)
         {
             await _itemService.DeleteItem(id);

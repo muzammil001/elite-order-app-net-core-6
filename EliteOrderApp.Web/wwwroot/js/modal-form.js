@@ -25,7 +25,7 @@ jQueryAjaxPost = form => {
                     $('#form-modal .modal-title').html('');
                     $('#form-modal').modal('hide');
                     new PNotify({
-                        title: 'Record has been added.',
+                        title: 'Record has been saved.',
                         type: 'success'
                     });
                     $(".refresh-table").click();

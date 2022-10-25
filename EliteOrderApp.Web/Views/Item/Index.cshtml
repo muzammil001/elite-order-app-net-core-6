@@ -10,6 +10,13 @@
 			<div class="col-md-12">
 				<div class="page-header-title">
 					<h3 class="m-b-10">Items</h3>
+					<div class="">
+						<button class="btn btn-square btn-dark"
+						        onclick="showInPopup('@Url.Action("AddOrEdit","Item",null,Context.Request.Scheme)', 'New Item')">
+							New Item
+						</button>
+						<button class="refresh-table btn btn-square btn-light">Refresh</button>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -35,17 +42,17 @@
 				{
 					data: "id",
 					render: function (data) {
-						return `<button class='btn btn-sm btn-info js-edit-customer' data-customer-id=${data}> Edit</button>` +
-							`<button class='btn btn-sm btn-danger js-delete-customer' data-customer-id=${data}> Delete</button>`;
+						return `<button class='btn btn-sm btn-info js-edit-item' data-item-id=${data}> Edit</button>` +
+							`<button class='btn btn-sm btn-danger js-delete-item' data-item-id=${data}> Delete</button>`;
 					}
 				}
 			];
 
-			const table = getTable("customers", "/api/items/get-items", cols);
+			const table = getTable("items", "/api/items/get-items", cols);
 
-			editRecord("customers", ".js-edit-customer", "Customer/AddOrEdit/", "data-customer-id", "Edit Customer");
+			editRecord("items", ".js-edit-item", "Item/AddOrEdit/", "data-item-id", "Edit Item");
 
-			deleteRecord("customers", ".js-delete-customer", "/api/customers/delete-customer/", "data-customer-id", table);
+			deleteRecord("items", ".js-delete-item", "/api/items/delete-item/", "data-item-id", table);
 
 			refreshTableWithTime(table, 15000);
 
