@@ -1082,11 +1082,12 @@ $(function() {
         new PNotify(opts);
     }
 
+
     // Custom bottom position
-    function show_stack_custom_bottom(type) {
+    function show_stack_custom_bottom(type, title, text) {
         var opts = {
-            title: "Over here",
-            text: "Check me out. I'm in a different stack.",
+            title: title,
+            text: text,
             width: "100%",
             cornerclass: "no-border-radius",
             addclass: "stack-custom-bottom bg-primary",
@@ -1094,25 +1095,25 @@ $(function() {
         };
         switch (type) {
             case 'error':
-            opts.title = "Oh No";
-            opts.text = "Watch out for that water tower!";
-            opts.addclass = "stack-custom-bottom bg-danger";
-            opts.type = "error";
-            break;
+                opts.title = title;
+                opts.text = text;
+                opts.addclass = "stack-custom-bottom bg-danger";
+                opts.type = "error";
+                break;
 
             case 'info':
-            opts.title = "Breaking News";
-            opts.text = "Have you met Ted?";
-            opts.addclass = "stack-custom-bottom bg-info";
-            opts.type = "info";
-            break;
+                opts.title = title;
+                opts.text = text;
+                opts.addclass = "stack-custom-bottom bg-info";
+                opts.type = "info";
+                break;
 
             case 'success':
-            opts.title = "Good News Everyone";
-            opts.text = "I've invented a device that bites shiny metal asses.";
-            opts.addclass = "stack-custom-bottom bg-success";
-            opts.type = "success";
-            break;
+                opts.title = title;
+                opts.text = text;
+                opts.addclass = "stack-custom-bottom bg-success";
+                opts.type = "success";
+                break;
         }
         new PNotify(opts);
     }

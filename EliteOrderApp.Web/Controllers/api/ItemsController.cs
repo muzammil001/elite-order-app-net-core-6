@@ -23,7 +23,7 @@ namespace EliteOrderApp.Web.Controllers.api
         }
 
         [HttpGet]
-        [Route("GetItems")]
+        [Route("get-items")]
         public async Task<IActionResult> GetCustomers()
         {
             var list = await _itemService.GetAll();

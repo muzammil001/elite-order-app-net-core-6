@@ -1,6 +1,4 @@
-﻿@model List<EliteOrderApp.Web.Dtos.CustomerDto>
-
-@{
+﻿@{
 	ViewData["Title"] = "Customers";
 }
 
@@ -26,32 +24,58 @@
 					<div class="card-header">
 						<h2>Customers</h2>
 						<div class="">
-							<a class="btn btn-square btn-dark" style="color: white;font-weight: bolder">New Customer</a>
+							<button class="btn btn-square btn-dark"
+									onclick="showInPopup('@Url.Action("AddOrEdit","Customer",null,Context.Request.Scheme)', 'New Customer')">
+								New Customer
+							</button>
+							<button class="refresh-table btn btn-square btn-light">Refresh</button>
 						</div>
 					</div>
 					<div class="card-block" id="view-all">
-					<partial name="_CustomerList"/>
-
+						<partial name="_CustomerList" />
 					</div>
 				</div>
 			</div>
 
 		</div>
 	</div>
-	
-	
 </div>
+
 @section Scripts{
 	<script>
 		$(document).ready(function () {
-			$('#customers').DataTable({
-			});
+
+			const cols = [
+				{
+					data: "name"
+				},
+				{
+					data: "contact"
+				},
+				{
+					data: "id",
+					render: function (data) {
+						return `<button class='btn btn-sm btn-info js-edit-customer' data-customer-id=${data}> Edit</button>` +
+							`<button class='btn btn-sm btn-danger js-delete-customer' data-customer-id=${data}> Delete</button>`;
+					}
+				}
+			];
+
+			const table = getTable("customers", "/api/customers/get-customers", cols);
+
+			editRecord("customers", ".js-edit-customer", "Customer/AddOrEdit/", "data-customer-id", "Edit Customer");
+
+			deleteRecord("customers", ".js-delete-customer", "/api/customers/delete-customer/", "data-customer-id", table);
+
+			refreshTableWithTime(table, 15000);
+
+			refreshTable(".refresh-table", table);
 		});
+
+
 	</script>
-	@{
-		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+
+
+	
 	}
-
-
-}
 

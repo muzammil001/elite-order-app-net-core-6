@@ -1,6 +1,4 @@
 ﻿using AutoMapper;
-using DevExtreme.AspNet.Data;
-using DevExtreme.AspNet.Mvc;
 using EliteOrderApp.Domain.Entities;
 using EliteOrderApp.Service;
 using EliteOrderApp.Web.Dtos;
@@ -23,11 +21,9 @@ namespace EliteOrderApp.Web.Controllers
             _mapper = mapper;
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            var customers = await _customerService.GetAll();
-            var customersModel = _mapper.Map<List<CustomerDto>>(customers);
-            return View(customersModel);
+            return View();
         }
 
         [NoDirectAccess]
@@ -92,19 +88,6 @@ namespace EliteOrderApp.Web.Controllers
             }
 
             return Json(new { isValid = false, html = Helper.RenderRazorViewToString(this, "AddOrEdit", customerDto) });
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Delete(int id)
-        {
-            await _customerService.DeleteCustomer(id);
-            var customers = await _customerService.GetAll();
-            return Json(new
-            {
-                isValid = true,
-                html = Helper.RenderRazorViewToString(this, "_ViewAll", customers)
-            });
-
         }
 
     }

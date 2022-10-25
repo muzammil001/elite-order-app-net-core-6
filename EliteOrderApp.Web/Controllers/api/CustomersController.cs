@@ -23,7 +23,7 @@ namespace EliteOrderApp.Web.Controllers.api
         }
 
         [HttpGet]
-        [Route("GetCustomers")]
+        [Route("get-customers")]
         public async Task<IActionResult> GetCustomers()
         {
             var list = await _customerService.GetAll();
@@ -31,7 +31,7 @@ namespace EliteOrderApp.Web.Controllers.api
         }
 
         [HttpGet]
-        [Route("GetCustomer/{id}")]
+        [Route("get-customer/{id}")]
         public async Task<IActionResult> GetCustomer(int id)
         {
             var customer = await _customerService.GetCustomer(id);
@@ -39,7 +39,7 @@ namespace EliteOrderApp.Web.Controllers.api
         }
 
         [HttpPost]
-        [Route("CreateCustomer")]
+        [Route("create-customer")]
         public async Task<IActionResult> CreateCustomer(CustomerDto customerDto)
         {
 
@@ -52,12 +52,12 @@ namespace EliteOrderApp.Web.Controllers.api
             }
 
             var customer = _mapper.Map<Customer>(customerDto);
-            _customerService.NewCustomer(customer);
+           await _customerService.NewCustomer(customer);
             return Ok(customer);
         }
 
         [HttpPut]
-        [Route("UpdateCustomer")]
+        [Route("update-customer")]
         public async Task<IActionResult> UpdateCustomer(CustomerDto customerDto)
         {
             var customerInDb = await _customerService.GetCustomer(customerDto.Id);
@@ -71,7 +71,7 @@ namespace EliteOrderApp.Web.Controllers.api
         }
 
         [HttpDelete]
-        [Route("DeleteCustomer/{id}")]
+        [Route("delete-customer/{id}")]
         public async Task<IActionResult> DeleteCustomer(int id)
         {
             await _customerService.DeleteCustomer(id);

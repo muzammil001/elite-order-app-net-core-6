@@ -7,18 +7,24 @@
 
 	<!-- Favicon icon -->
 	<link rel="icon" href="~/assets/images/favicon.ico" type="image/x-icon">
+
+	<link rel="stylesheet" href="css/custom.css" />
+
 	<!-- fontawesome icon -->
 	<link rel="stylesheet" href="~/assets/fonts/fontawesome/css/fontawesome-all.min.css">
 	<!-- animation css -->
-	<link rel="stylesheet" href="~/assets/plugins/animation/css/animate.min.css">
+	<link rel="stylesheet" href="assets/plugins/animation/css/animate.min.css">
+	<!-- pnotify css -->
+	<link rel="stylesheet" href="assets/plugins/pnotify/css/pnotify.custom.min.css">
+	<!-- pnotify-custom css -->
+	<link rel="stylesheet" href="assets/css/pages/pnotify.css">
+
 	<!-- vendor css -->
 	<link rel="stylesheet" href="~/assets/css/style.css">
 
 	<!-- data tables css -->
 	<link rel="stylesheet" href="~/assets/plugins/data-tables/css/datatables.min.css">
 
-	<!-- modal-window-effects css -->
-	<link rel="stylesheet" href="assets/plugins/modal-window-effects/css/md-modal.css">
 
 	<partial name="_DevExpressLib" />
 </head>
@@ -37,25 +43,46 @@
 		</div>
 	</section>
 	<partial name="_Footer" />
-<partial name="_Modal" />
+	<partial name="_FormModal" />
+
+
+
+
 
 	<script src="~/assets/js/vendor-all.min.js"></script>
 	<script src="~/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
 	<script src="~/assets/js/pcoded.min.js"></script>
 
+	<!-- Libraries -->
 	<!-- datatable Js -->
 	<script src="~/assets/plugins/data-tables/js/datatables.min.js"></script>
 	<script src="~/assets/js/pages/tbl-datatable-custom.js"></script>
 
-	<!-- modal-window-effects Js -->
-	<script src="~/assets/plugins/modal-window-effects/js/classie.js"></script>
-	<script src="~/assets/plugins/modal-window-effects/js/modalEffects.js"></script>
+	<script src="~/lib/notify.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.5.2/bootbox.min.js"></script>
 
-	@*custom js*@
-	<script src="~/js/site.js"></script>
-	<script src="~/js/notify.js"></script>
+	<!-- pnotify Js -->
+	<script src="assets/plugins/pnotify/js/pnotify.custom.min.js"></script>
+	<script src="assets/plugins/pnotify/js/notify-event.js"></script>
+
+	<!-- Input mask Js -->
+	<script src="assets/plugins/inputmask/js/inputmask.min.js"></script>
+	<script src="assets/plugins/inputmask/js/jquery.inputmask.min.js"></script>
+	<script src="assets/plugins/inputmask/js/autoNumeric.js"></script>
+
+	<!-- form-picker-custom Js -->
+	<script src="assets/js/pages/form-masking-custom.js"></script>
 
 
+	<!-- custom JS -->
+
+	<script src="js/modal-form.js"></script>
+	<script src="js/crud.js"></script>
+
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
 	@await RenderSectionAsync("Scripts", required: false)
+
 </body>
 </html>

@@ -34,8 +34,8 @@ var ModalEffects = (function() {
 			el.addEventListener( 'click', function( ev ) {
 				classie.add( modal, 'md-show' );
 				$('body').addClass(el.getAttribute( 'data-modal' ));
-				overlay.removeEventListener( 'click', removeModalHandler );
-				overlay.addEventListener( 'click', removeModalHandler );
+				//overlay.removeEventListener( 'click', removeModalHandler );
+				//overlay.addEventListener( 'click', removeModalHandler );
 
 				if( classie.has( el, 'md-setperspective' ) ) {
 					setTimeout( function() {
