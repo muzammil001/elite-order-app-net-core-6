@@ -21,7 +21,7 @@ namespace EliteOrderApp.Web.Controllers.api
         }
 
         [HttpGet]
-        [Route("GetCartItems")]
+        [Route("get-cart-items")]
         public async Task<IActionResult> GetCartItems()
         {
             var list = await _cartService.GetAll();
@@ -30,7 +30,7 @@ namespace EliteOrderApp.Web.Controllers.api
 
 
         [HttpGet]
-        [Route("GetCartItem/{id}")]
+        [Route("get-cart-item/{id}")]
         public async Task<IActionResult> GetCartItem(int id)
         {
             var item = await _cartService.GetItem(id);
@@ -43,9 +43,14 @@ namespace EliteOrderApp.Web.Controllers.api
 
 
         [HttpPost]
-        [Route("AddItemInCart")]
+        [Route("add-item-cart")]
         public async Task<IActionResult> AddItemInCart(CartDto cartDto)
         {
+            if (cartDto.ItemId==0)
+            {
+                return BadRequest("Please select Item.");
+            }
+
             if (await _cartService.IsItemExists(cartDto.ItemId))
             {
                 return BadRequest("Item is already exists.");
@@ -60,7 +65,7 @@ namespace EliteOrderApp.Web.Controllers.api
         }
 
         [HttpDelete]
-        [Route("DeleteCartItem/{id}")]
+        [Route("delete-cart-item/{id}")]
         public async Task<IActionResult> DeleteItem(int id)
         {
             await _cartService.DeleteCartItem(id);

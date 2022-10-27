@@ -23,6 +23,7 @@ public class CustomerService
         _context.Customers.Add(customer);
        await _context.SaveChangesAsync();
     }
+
     public async Task<Customer?> GetCustomer(int key)
     {
         var customerInDb = await _context.Customers.FirstOrDefaultAsync(x => x.Id == key);

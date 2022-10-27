@@ -1,11 +1,10 @@
-﻿@using EliteOrderApp.Domain.Entities
+﻿@model EliteOrderApp.Web.Models.OrderModel
 @{
 	ViewData["Title"] = "New Order";
 }
 
 
 <!-- [ breadcrumb ] start -->
-@model EliteOrderApp.Web.Models.OrderModel
 <div class="page-header">
 	<div class="page-block">
 		<div class="row align-items-center">
@@ -21,7 +20,122 @@
 
 <div class="main-body">
 	<div class="page-wrapper">
-		
-	</div>
-	</div>
+		<form asp-action="NewOrder" asp-route-id="@Model.Order.Id" onsubmit="return jQueryAjaxPost(this);" autocomplete="off">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<input type="hidden" asp-for="Order.Id" />
+			<div class="form-group">
+				<div class="row">
+					<div class="col-md-6">
+						<label asp-for="Order.OrderDate" class="control-label"></label>
+						<input asp-for="Order.OrderDate" type="date" class="form-control" />
+						<span asp-validation-for="Order.OrderDate" class="text-danger"></span>
+					</div>
+					<div class="col-md-6">
+						<label asp-for="Order.DeliveryDate" class="control-label"></label>
+						<input asp-for="Order.DeliveryDate" type="date" class="form-control" />
+						<span asp-validation-for="Order.DeliveryDate" class="text-danger"></span>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="row">
+					<div class="col-md-12">
+						<label asp-for="Order.CustomerId" class="control-label"></label>
+						@Html.DropDownListFor(p => p.Order.CustomerId,
+						new SelectList(Model.Customers, "Id", "Name"), "---Select Customer---",
+						new { @class = "form-control" })
+					</div>
+				</div>
+			</div>
+			<div class="form-group mt-5 ">
+				<div class="row">
+					<div class="col-md-4">
+						@Html.DropDownListFor(p => p.Order.ItemId,
+						new SelectList(Model.Items, "Id", "Name"), "---Select Item---",
+						new { @class = "form-control",@id="item" })
 
+						<div class="mt-5 ml-3">
+							<div class="row">
+								<div class="input-group input-group-sm mb-3">
+									<div class="input-group-prepend">
+										<span class="input-group-text" id="totalAmount">Total Amount:</span>
+									</div>
+									<input asp-for="Order.TotalAmount" class="form-control" required="required"  aria-label="Small" aria-describedby="totalAmount">
+								</div>
+							</div>
+
+							<div class="row mt-3">
+								<div class="input-group input-group-sm mb-3">
+									<div class="input-group-prepend">
+										<span class="input-group-text" id="advanceAmount">Advance Payment:</span>
+									</div>
+									<input asp-for="Order.AdvancePayment" class="form-control" aria-label="Small" aria-describedby="advanceAmount">
+								</div>
+							</div>
+							<div class="row mt-3">
+								<div class="input-group input-group-sm mb-3">
+									<div class="input-group-prepend">
+										<span class="input-group-text" id="balance">Balance:</span>
+									</div>
+									<input asp-for="Order.Balance" class="form-control " aria-label="Small" aria-describedby="balance">
+								</div>
+							</div>
+						</div>
+
+					</div>
+					<div class="col-md-2">
+						<button class="btn btn-success" id="add-to-cart" type="button">Add to cart</button>
+					</div>
+					<div class="col-md-6">
+						<partial name="_CartItems" />
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<button type="submit" class="btn btn-primary btn-lg">
+					<i class="fas fa-save"></i>
+					Save
+				</button>
+			</div>
+		</form>
+	</div>
+</div>
+
+@section Scripts
+	{
+	<script>
+		$( document ).ready(function() {
+			const cols = [
+				{
+					data: "item.name"
+				},
+				{
+					data: "id",
+					render: function (data) {
+						return `<button class='btn btn-sm btn-danger js-delete-cartItem' type='button' data-cartItem-id=${data}> Delete</button>`;
+					}
+				}
+			];
+			const table = getTable("cartItems", "/api/cartItems/get-cart-items", cols, false);
+
+			deleteRecord("cartItems", ".js-delete-cartItem", "/api/cartItems/delete-cart-item/", "data-cartItem-id", table);
+
+			$("#add-to-cart").click(function (e) {
+				const i = $("#item").val();
+				console.log(i);
+				if (i === '') {
+					new PNotify({
+						title: "Please select Item.",
+						type: 'error'
+					});
+					return;
+				}
+				const data = {
+					ItemId: i
+				}
+				saveRecord("/api/cartItems/add-item-cart", data,table,"Item added in cart.");
+			});
+		});
+		
+	</script>
+}

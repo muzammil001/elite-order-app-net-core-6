@@ -4,9 +4,7 @@ $(document).ready(function() {
         daysOfWeekDisabled: "2"
     });
 
-    $('#d_highlight').datepicker({
-        daysOfWeekHighlighted: "1"
-    });
+    
 
     $('#d_auto').datepicker({
         autoclose: true

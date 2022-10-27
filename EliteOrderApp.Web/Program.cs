@@ -12,6 +12,7 @@ builder.Services.AddDbContext<AppDbContext>(x => x.UseSqlServer(builder.Configur
 builder.Services.AddTransient<ItemService>();
 builder.Services.AddTransient<CustomerService>();
 builder.Services.AddTransient<CartService>();
+builder.Services.AddTransient<OrderService>();
 
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());

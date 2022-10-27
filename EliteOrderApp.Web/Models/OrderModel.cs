@@ -1,23 +1,15 @@
 ﻿using EliteOrderApp.Domain.Entities;
+using EliteOrderApp.Web.Dtos;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using NuGet.Protocol.Core.Types;
 
 namespace EliteOrderApp.Web.Models
 {
 	public class OrderModel
 	{
-        public DateTime OrderDate { get; set; }
-        public DateTime DeliveryDate { get; set; }
+        public OrderDto Order { get; set; }
 
-        public int CustomerId { get; set; } 
-        public int ItemId { get; set; }
-
-        public int TotalAmount { get; set; }
-        public int Discount { get; set; }
-
-        public bool IsPending { get; set; }
-        public bool IsCompleted { get; set; }
-
-        public int AdvancePayment { get; set; }
-
-
+        public List<Item> Items { get; set; }
+        public List<Customer> Customers { get; set; }
     }
 }

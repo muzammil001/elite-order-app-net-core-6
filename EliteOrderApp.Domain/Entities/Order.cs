@@ -16,6 +16,5 @@
         public bool IsCompleted { get; set; }
 
         public int AdvancePayment { get; set; }
-        //public int Balance { get; set; }
     }
 }

@@ -41,7 +41,12 @@ namespace EliteOrderApp.Service
         {
             return await _context.CartItems.AnyAsync(x => x.ItemId == itemId);
         }
+        public void ClearCart()
+        {
+            _context.CartItems.RemoveRange(_context.CartItems);
+            _context.SaveChanges();
 
+        }
         public async Task UpdateCart()
         {
             await _context.SaveChangesAsync();

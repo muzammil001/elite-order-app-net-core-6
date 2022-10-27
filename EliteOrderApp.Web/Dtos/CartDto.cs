@@ -1,9 +1,12 @@
-﻿namespace EliteOrderApp.Web.Dtos
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace EliteOrderApp.Web.Dtos
 {
     public class CartDto
     {
-        public int Id { get; set; }
+        public int Id { get; set; } = 0;
 
+        [Required]
         public int ItemId { get; set; }
     }
 }
