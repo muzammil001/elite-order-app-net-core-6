@@ -5,11 +5,11 @@ using NuGet.Protocol.Core.Types;
 
 namespace EliteOrderApp.Web.Models
 {
-	public class OrderModel
-	{
+    public class OrderModel
+    {
         public OrderDto Order { get; set; }
 
-        public List<Item> Items { get; set; }
-        public List<Customer> Customers { get; set; }
+        public List<Item> Items { get; set; } //Dropdown list
+        public List<Customer> Customers { get; set; } //Dropdown list
     }
 }

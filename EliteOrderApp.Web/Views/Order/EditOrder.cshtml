@@ -20,9 +20,9 @@
 
 <div class="main-body">
 	<div class="page-wrapper">
-		<form asp-action="NewOrder" asp-route-id="@Model.Order.Id" onsubmit="return createOrder(this);" autocomplete="off">
+		<form asp-action="NewOrder" asp-route-id="@Model.Order.Id" onsubmit="return saveOrder(this);" autocomplete="off">
 			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
-			<input type="hidden" asp-for="Order.Id" />
+			<input type="hidden" asp-for="Order.Id" id="orderId" />
 			<div class="form-group">
 				<div class="row">
 					<div class="col-md-6">
@@ -87,7 +87,7 @@
 						<button class="btn btn-success" id="add-to-cart" type="button">Add to cart</button>
 					</div>
 					<div class="col-md-6">
-						<partial name="_CartItems" />
+						<partial name="_OrderDetails" />
 					</div>
 				</div>
 			</div>
@@ -112,29 +112,28 @@
 				{
 					data: "id",
 					render: function (data) {
-						return `<button class='btn btn-sm btn-danger js-delete-cartItem' type='button' data-cartItem-id=${data}> Delete</button>`;
+						return `<button class='btn btn-sm btn-danger js-delete-orderItem' type='button' data-orderItem-id=${data}> Delete</button>`;
 					}
 				}
 			];
-			const table = getTable("cartItems", "/api/cartItems/get-cart-items", cols, false);
+			const table = getTable("orderDetails", "/api/orders/get-orders-details/"+ @Model.Order.Id, cols, false);
 
-			deleteRecord("cartItems", ".js-delete-cartItem", "/api/cartItems/delete-cart-item/", "data-cartItem-id", table);
+			//deleteRecord("orderDetails", ".js-delete-orderItem", "/api/cartItems/delete-cart-item/", "data-cartItem-id", table);
 
-			$("#add-to-cart").click(function (e) {
-				const i = $("#item").val();
-				console.log(i);
-				if (i === '') {
-					new PNotify({
-						title: "Please select Item.",
-						type: 'error'
-					});
-					return;
-				}
-				const data = {
-					ItemId: i
-				}
-				saveRecord("/api/cartItems/add-item-cart", data,table,"Item added in cart.");
-			});
+			//$("#add-to-cart").click(function (e) {
+			//	const i = $("#item").val();
+			//	if (i === '') {
+			//		new PNotify({
+			//			title: "Please select Item.",
+			//			type: 'error'
+			//		});
+			//		return;
+			//	}
+			//	const data = {
+			//		ItemId: i
+			//	}
+			//	saveRecord("/api/cartItems/add-item-cart", data,table,"Item added in cart.");
+			//});
 
 			$("#advancePayment").on('change', function() {
 				const totalAmount = parseInt($("#totalAmount").val().replace(/,/g, ''));
@@ -144,7 +143,7 @@
 
 			});
 
-			createOrder = form => {
+			saveOrder = form => {
 				try {
 					$.ajax({
 						type: 'POST',

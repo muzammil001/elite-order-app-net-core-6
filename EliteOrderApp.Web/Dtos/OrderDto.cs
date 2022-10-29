@@ -9,6 +9,7 @@ namespace EliteOrderApp.Web.Dtos
         public int Id { get; set; }
 
         [DisplayName("Order Date")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime OrderDate { get; set; } = DateTime.Today;
 
         [DisplayName("Delivery Date")]
@@ -23,11 +24,11 @@ namespace EliteOrderApp.Web.Dtos
 
         public int? ItemId { get; set; } = 0;
 
-        public int TotalAmount { get; set; } = 0;
+        public string TotalAmount { get; set; } = "0";
         public int Discount { get; set; }
         
-        public int AdvancePayment { get; set; } = 0;
-        public int Balance { get; set; } = 0;
+        public string AdvancePayment { get; set; } = "0";
+        public string Balance { get; set; } = "0";
 
         public bool IsPending { get; set; }
         public bool IsCompleted { get; set; }

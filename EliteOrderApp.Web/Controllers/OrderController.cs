@@ -38,33 +38,64 @@ namespace EliteOrderApp.Web.Controllers
             {
                 Order = new OrderDto(),
                 Items = items.ToList(),
-               Customers = customers.ToList()
+                Customers = customers.ToList()
             };
             return View("NewOrder", order);
+        }
+
+        public  IActionResult ManageOrders()
+        {
+            return View();
+        }
+
+        public async Task<IActionResult> EditOrder(int id)
+        {
+            //clearing cart 
+            _cartItemService.ClearCart();
+
+            var items = await _itemService.GetAll();
+            var customers = await _customerService.GetAll();
+            var orderInDb = await _orderService.GetOrder(id);
+            
+            var order = new OrderModel()
+            {
+                Order = _mapper.Map<OrderDto>(orderInDb),
+                Items = items.ToList(),
+                Customers = customers.ToList()
+            };
+            return View("EditOrder",order);
         }
 
         [HttpPost]
         public async Task<IActionResult> NewOrder(OrderModel model)
         {
+            if (!TryValidateModel(model.Order))
+                return BadRequest(ModelState.GetFullErrorMessage());
+            
+            if (model.Order.TotalAmount == "0")
+            {
+                return BadRequest("Please enter order total amount.");
+            }
+
             if (model.Order.Id == 0)
             {
-                if (!TryValidateModel(model.Order))
-                    return BadRequest(ModelState.GetFullErrorMessage());
-
-
                 var cartItems = await _cartItemService.GetAll();
                 if (cartItems.Count == 0)
                 {
                     return BadRequest("Please add items in cart.");
                 }
 
-                if (model.Order.TotalAmount==0)
-                {
-                    return BadRequest("Please enter order total amount.");
-
-                }
                 //Saving order
-                var order = _mapper.Map<Order>(model.Order);
+                var order = new Order()
+                {
+                    OrderDate = model.Order.OrderDate,
+                    DeliveryDate = model.Order.DeliveryDate,
+                    CustomerId = model.Order.CustomerId ?? 0,
+                    TotalAmount = Convert.ToInt32(model.Order.AdvancePayment.Replace(",","")),
+                    AdvancePayment = Convert.ToInt32(model.Order.AdvancePayment.Replace(",", "")),
+                    IsPending = true,
+                    IsCompleted = false,
+                };
                 var orderId = await _orderService.SaveOrder(order);
 
                 //Saving order details
@@ -81,6 +112,11 @@ namespace EliteOrderApp.Web.Controllers
 
                 return Json(new { isValid = true, html = "" });
 
+            }
+            else
+            {
+                //clearing cart 
+                _cartItemService.ClearCart();
             }
             return Json(new { isValid = true, html = "" });
         }

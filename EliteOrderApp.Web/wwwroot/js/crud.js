@@ -1,4 +1,4 @@
-﻿function getTable(tableId, url, columns, paging = true, ordering = true, info = true, filter = true) {
+﻿function getTable(tableId, url, columns, columnDefs=null, paging = true, ordering = true, info = true, filter = true) {
 
     const table = $(`#${tableId}`).DataTable({
         "paging": paging,
@@ -9,7 +9,8 @@
             url: url,
             dataSrc: ""
         },
-        columns: columns
+        columns: columns,
+        columnDefs: columnDefs
     });
 
     return table;
