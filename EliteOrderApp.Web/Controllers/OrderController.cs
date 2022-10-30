@@ -67,7 +67,7 @@ namespace EliteOrderApp.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> NewOrder(OrderModel model)
+        public async Task<IActionResult> SaveOrder(OrderModel model, int id = 0)
         {
             if (!TryValidateModel(model.Order))
                 return BadRequest(ModelState.GetFullErrorMessage());
@@ -115,10 +115,17 @@ namespace EliteOrderApp.Web.Controllers
             }
             else
             {
+                var orderInDb = await _orderService.GetOrder(id);
+                var order = _mapper.Map(model.Order, orderInDb);
+                _orderService.UpdateOrder(order);
+
                 //clearing cart 
                 _cartItemService.ClearCart();
+
+                return NoContent();
+
+               
             }
-            return Json(new { isValid = true, html = "" });
         }
 
 

@@ -1,5 +1,6 @@
 'use strict';
-$(document).ready(function() {
+$(document).ready(function () {
+    $.fn.datepicker.defaults.format = "dd/mm/yyyy";
     $('#d_week').datepicker({
         daysOfWeekDisabled: "2"
     });
@@ -20,10 +21,10 @@ $(document).ready(function() {
         toggleActive: true
     });
 
-    $('#d_today').datepicker({
+    $('.d_today').datepicker({
         keyboardNavigation: false,
         forceParse: false,
-        todayHighlight: true
+        todayHighlight: true,
     });
 
     $('#disp_week').datepicker({

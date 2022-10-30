@@ -20,91 +20,15 @@
 
 <div class="main-body">
 	<div class="page-wrapper">
-		<form asp-action="NewOrder" asp-route-id="@Model.Order.Id" onsubmit="return createOrder(this);" autocomplete="off">
-			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
-			<input type="hidden" asp-for="Order.Id" />
-			<div class="form-group">
-				<div class="row">
-					<div class="col-md-6">
-						<label asp-for="Order.OrderDate" class="control-label"></label>
-						<input asp-for="Order.OrderDate" type="date" class="form-control" />
-						<span asp-validation-for="Order.OrderDate" class="text-danger"></span>
-					</div>
-					<div class="col-md-6">
-						<label asp-for="Order.DeliveryDate" class="control-label"></label>
-						<input asp-for="Order.DeliveryDate" type="date" class="form-control" />
-						<span asp-validation-for="Order.DeliveryDate" class="text-danger"></span>
-					</div>
-				</div>
-			</div>
-			<div class="form-group">
-				<div class="row">
-					<div class="col-md-12">
-						<label asp-for="Order.CustomerId" class="control-label"></label>
-						@Html.DropDownListFor(p => p.Order.CustomerId,
-						new SelectList(Model.Customers, "Id", "Name"), "---Select Customer---",
-						new { @class = "form-control" })
-					</div>
-				</div>
-			</div>
-			<div class="form-group mt-5 ">
-				<div class="row">
-					<div class="col-md-4">
-						@Html.DropDownListFor(p => p.Order.ItemId,
-						new SelectList(Model.Items, "Id", "Name"), "---Select Item---",
-						new { @class = "form-control",@id="item" })
-
-						<div class="mt-5 ml-3">
-							<div class="row">
-								<div class="input-group input-group-sm mb-3">
-									<div class="input-group-prepend">
-										<span class="input-group-text" >Total Amount:</span>
-									</div>
-									<input asp-for="Order.TotalAmount" type="text" class="form-control autonumber" data-v-max="999999999" id="totalAmount" required="required" aria-label="Small" aria-describedby="totalAmount" data-v-min="0">
-								</div>
-							</div>
-
-							<div class="row mt-3">
-								<div class="input-group input-group-sm mb-3">
-									<div class="input-group-prepend">
-										<span class="input-group-text" >Advance Payment:</span>
-									</div>
-									<input asp-for="Order.AdvancePayment" type="text" class="form-control autonumber" data-v-max="999999999" id="advancePayment" aria-label="Small" aria-describedby="advanceAmount" data-v-min="0">
-								</div>
-							</div>
-							<div class="row mt-3">
-								<div class="input-group input-group-sm mb-3">
-									<div class="input-group-prepend">
-										<span class="input-group-text" >Balance:</span>
-									</div>
-									<input asp-for="Order.Balance" type="text" class="form-control autonumber" data-v-max="999999999" id="balance" readonly="readonly" aria-label="Small" aria-describedby="balance" data-v-min="0">
-								</div>
-							</div>
-						</div>
-
-					</div>
-					<div class="col-md-2">
-						<button class="btn btn-success" id="add-to-cart" type="button">Add to cart</button>
-					</div>
-					<div class="col-md-6">
-						<partial name="_CartItems" />
-					</div>
-				</div>
-			</div>
-			<div class="form-group">
-				<button type="submit" class="btn btn-primary btn-lg">
-					<i class="fas fa-save"></i>
-					Save
-				</button>
-			</div>
-		</form>
+		@await Html.PartialAsync("_OrderForm",Model);
 	</div>
 </div>
 
 @section Scripts
 	{
+
 	<script>
-		$( document ).ready(function() {
+		$(document).ready(function () {
 			const cols = [
 				{
 					data: "item.name"
@@ -116,13 +40,12 @@
 					}
 				}
 			];
-			const table = getTable("cartItems", "/api/cartItems/get-cart-items", cols, false);
+			const cartTable = getTable("cartItems", "/api/cartItems/get-cart-items", cols, false);
 
-			deleteRecord("cartItems", ".js-delete-cartItem", "/api/cartItems/delete-cart-item/", "data-cartItem-id", table);
+			deleteRecord("cartItems", ".js-delete-cartItem", "/api/cartItems/delete-cart-item/", "data-cartItem-id", cartTable);
 
-			$("#add-to-cart").click(function (e) {
+			$(".add-to-cart").click(function (e) {
 				const i = $("#item").val();
-				console.log(i);
 				if (i === '') {
 					new PNotify({
 						title: "Please select Item.",
@@ -133,18 +56,19 @@
 				const data = {
 					ItemId: i
 				}
-				saveRecord("/api/cartItems/add-item-cart", data,table,"Item added in cart.");
+				saveRecord("/api/cartItems/add-item-cart", data, cartTable, "Item added in cart.");
 			});
 
-			$("#advancePayment").on('change', function() {
+
+			$("#advancePayment").on('change', function () {
 				const totalAmount = parseInt($("#totalAmount").val().replace(/,/g, ''));
 				const advancePayment = parseInt($("#advancePayment").val().replace(/,/g, ''));
-				const balance =totalAmount-advancePayment; 
+				const balance = totalAmount - advancePayment;
 				$("#balance").val(balance);
 
 			});
 
-			createOrder = form => {
+			saveOrder = form => {
 				try {
 					$.ajax({
 						type: 'POST',
@@ -154,7 +78,7 @@
 						processData: false,
 						success: function (res) {
 							if (res.isValid) {
-							
+
 								new PNotify({
 									title: 'Order has been saved.',
 									type: 'success',
@@ -185,6 +109,6 @@
 				return false;
 			}
 		});
-		
+
 	</script>
 }

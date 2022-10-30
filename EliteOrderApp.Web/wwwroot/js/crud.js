@@ -85,7 +85,6 @@ function saveRecord(url, data, table, msg) {
             });
             if (table !== null) {
                 table.ajax.reload(null, false);
-
             }
 
         },

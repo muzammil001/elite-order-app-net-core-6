@@ -1,0 +1,112 @@
+﻿@model EliteOrderApp.Web.Models.OrderModel
+<form asp-action="SaveOrder" asp-route-id="@Model.Order.Id" onsubmit="return saveOrder(this);" autocomplete="off">
+	<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+	<input type="hidden" asp-for="Order.Id" id="orderId" />
+	<div class="form-group">
+		<div class="row">
+			<div class="col-md-6">
+				<label asp-for="Order.OrderDate" class="control-label"></label>
+				<input asp-for="Order.OrderDate"  class="form-control d_today"  type="text" />
+				<span asp-validation-for="Order.OrderDate" class="text-danger"></span>
+			</div>
+			<div class="col-md-6">
+				<label asp-for="Order.DeliveryDate" class="control-label"></label>
+				<input asp-for="Order.DeliveryDate"  class="form-control  d_today"  type="text" />
+				<span asp-validation-for="Order.DeliveryDate" class="text-danger"></span>
+			</div>
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="row">
+			<div class="col-md-12">
+				<label asp-for="Order.CustomerId" class="control-label"></label>
+				@Html.DropDownListFor(p => p.Order.CustomerId,
+					new SelectList(Model.Customers, "Id", "Name"), "---Select Customer---",
+					new { @class = "form-control" })
+			</div>
+		</div>
+	</div>
+	<div class="form-group mt-5 ">
+		<div class="row">
+			<div class="col-md-4">
+				<label asp-for="Order.ItemId" class="control-label"></label>
+				@Html.DropDownListFor(p => p.Order.ItemId,
+					new SelectList(Model.Items, "Id", "Name"),
+					new { @class = "form-control", @id = "item" })
+
+				<div class="mt-5 ml-3">
+					<div class="row">
+						<div class="input-group input-group-sm mb-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text">Total Amount:</span>
+							</div>
+							<input asp-for="Order.TotalAmount" type="text" class="form-control autonumber" data-v-max="999999999" id="totalAmount" required="required" aria-label="Small" aria-describedby="totalAmount" data-v-min="0">
+						</div>
+					</div>
+
+					<div class="row mt-3">
+						<div class="input-group input-group-sm mb-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text">Advance Payment:</span>
+							</div>
+							<input asp-for="Order.AdvancePayment" type="text" class="form-control autonumber" data-v-max="999999999" id="advancePayment" aria-label="Small" aria-describedby="advanceAmount" data-v-min="0">
+						</div>
+					</div>
+					<div class="row mt-3">
+						<div class="input-group input-group-sm mb-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text">Balance:</span>
+							</div>
+							<input asp-for="Order.Balance" type="text" class="form-control autonumber" data-v-max="999999999" id="balance" readonly="readonly" aria-label="Small" aria-describedby="balance" data-v-min="0">
+						</div>
+					</div>
+				</div>
+
+			</div>
+			<div class="col-md-2 mt-4">
+				<button class="btn btn-success add-to-cart " id="" type="button">Add to cart</button>
+			</div>
+			<div class="col-md-6">
+				@if (Model.Order.Id==0)
+				{
+					<partial name="_CartItems"/>
+
+				}
+				else
+				{
+					<partial name="_OrderDetails"/>
+
+				}
+			</div>
+		</div>
+	</div>
+	<div class="form-group">
+		<button type="submit" class="btn btn-primary btn-lg">
+			<i class="fas fa-save"></i>
+			Save
+		</button>
+	</div>
+</form>
+
+<style>
+	.datepicker > .datepicker-days {
+		display: block;
+	}
+
+	ol.linenums {
+		margin: 0 0 0 -8px;
+	}
+</style>
+<script>
+	var page = {
+		bootstrap: 3
+	};
+
+	function swap_bs() {
+		page.bootstrap = 3;
+	}
+</script>
+
+<script>
+
+</script>
