@@ -22,7 +22,7 @@
 				<label asp-for="Order.CustomerId" class="control-label"></label>
 				@Html.DropDownListFor(p => p.Order.CustomerId,
 					new SelectList(Model.Customers, "Id", "Name"), "---Select Customer---",
-					new { @class = "form-control" })
+				new { @class = "form-control js-example-basic-single" })
 			</div>
 		</div>
 	</div>

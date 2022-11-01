@@ -10,6 +10,6 @@ namespace EliteOrderApp.Web.Models
         public OrderDto Order { get; set; }
 
         public List<Item> Items { get; set; } //Dropdown list
-        public List<Customer> Customers { get; set; } //Dropdown list
+        public List<CustomerDropDownListModel> Customers { get; set; } //Dropdown list
     }
 }

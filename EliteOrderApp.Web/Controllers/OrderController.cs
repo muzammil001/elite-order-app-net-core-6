@@ -38,9 +38,19 @@ namespace EliteOrderApp.Web.Controllers
             {
                 Order = new OrderDto(),
                 Items = items.ToList(),
-                Customers = customers.ToList()
+                Customers = GetCustomerList(customers)
             };
             return View("NewOrder", order);
+        }
+
+        private static List<CustomerDropDownListModel> GetCustomerList(List<Customer> customers)
+        {
+            if (customers == null) throw new ArgumentNullException(nameof(customers));
+            return customers.Select(x => new CustomerDropDownListModel()
+            {
+                Id = x.Id,
+                Name = $"{x.Name} - {x.Contact}"
+            }).ToList();
         }
 
         public  IActionResult ManageOrders()
@@ -61,7 +71,7 @@ namespace EliteOrderApp.Web.Controllers
             {
                 Order = _mapper.Map<OrderDto>(orderInDb),
                 Items = items.ToList(),
-                Customers = customers.ToList()
+                Customers = GetCustomerList(customers)
             };
             return View("EditOrder",order);
         }
