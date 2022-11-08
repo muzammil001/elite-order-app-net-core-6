@@ -3,6 +3,7 @@ using EliteOrderApp.Domain.Entities;
 using EliteOrderApp.Service;
 using EliteOrderApp.Web.Dtos;
 using EliteOrderApp.Web.Extensions;
+using EliteOrderApp.Web.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -25,20 +26,45 @@ namespace EliteOrderApp.Web.Controllers.api
 
         [HttpGet]
         [Route("get-pending-orders")]
-        public async Task<IActionResult> GetOrders()
+        public async Task<IActionResult> GetPendingOrders()
         {
             var list = await _orderService.GetAllPendingOrders();
-            return Ok(list);
+            var model = list.Select(x => new OrderListModel()
+            {
+                Id = x.Id,
+                OrderDate = x.OrderDate,
+                DeliveryDate = x.DeliveryDate,
+                CustomerName = $"{x.Customer.Name} - {x.Customer.Contact}",
+                Balance=150, // get from payment history
+                TotalAmount=x.TotalAmount,
+            });
+            return Ok(model);
         }
 
-       
+        [HttpGet]
+        [Route("get-completed-orders")]
+        public async Task<IActionResult> GetCompletedOrders()
+        {
+            var list = await _orderService.GetAllCompletedOrders();
+            var model = list.Select(x => new OrderListModel()
+            {
+                Id = x.Id,
+                OrderDate = x.OrderDate,
+                DeliveryDate = x.DeliveryDate,
+                CustomerName = $"{x.Customer.Name} - {x.Customer.Contact}",
+                Balance = 150, // get from payment history
+                TotalAmount = x.TotalAmount,
+            });
+            return Ok(model);
+        }
+
 
         [HttpPut]
         [Route("update-order")]
         public async Task<IActionResult> UpdateOrder(OrderDto orderDto)
         {
             var orderInDb = await _orderService.GetOrder(orderDto.Id);
-           
+
             var order = _mapper.Map(orderDto, orderInDb);
             _orderService.UpdateOrder(order);
             return NoContent();
@@ -68,7 +94,7 @@ namespace EliteOrderApp.Web.Controllers.api
                 return BadRequest("Please select Item.");
             }
 
-            if (await _orderService.IsItemExists(orderDetailDto.ItemId,orderDetailDto.OrderId))
+            if (await _orderService.IsItemExists(orderDetailDto.ItemId, orderDetailDto.OrderId))
             {
                 return BadRequest("Item is already exists.");
             }

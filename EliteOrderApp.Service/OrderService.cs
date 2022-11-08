@@ -22,7 +22,10 @@ namespace EliteOrderApp.Service
         {
             return await _context.Orders.Include(x=>x.Customer).Where(x => x.IsPending).OrderByDescending(x => x.OrderDate).ToListAsync();
         }
-
+        public async Task<List<Order>> GetAllCompletedOrders()
+        {
+            return await _context.Orders.Include(x => x.Customer).Where(x => x.IsCompleted).OrderByDescending(x => x.OrderDate).ToListAsync();
+        }
         public async Task<Order> GetOrder(int id)
         {
             var order = await _context.Orders.FirstOrDefaultAsync(x => x.Id == id);

@@ -1,0 +1,62 @@
+﻿
+@{
+    ViewData["Title"] = "Completed Orders";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card">
+	<div class="card-header">
+		<h3>Completed Orders</h3>
+	</div>
+	<div class="card-block">
+		<table id="completedOrders" class="display table  compact">
+			<thead>
+			<tr>
+				<th>Order Date</th>
+				<th>Delivery Date</th>
+				<th>Customer Name</th>
+				<th>Total Amount</th>
+			</tr>
+			</thead>
+			<tbody>
+			</tbody>
+			<tfoot>
+			</tfoot>
+		</table>
+	</div>
+</div>
+@section Scripts
+	{
+	<script>
+		$(document).ready(function () {
+			const cols = [
+				{
+					data: "orderDate",
+					render: function (data) {
+						const date = new Date(data);
+						const month = date.getMonth() + 1;
+						return (month.toString().length > 1 ? month : "0" + month) + "/" + date.getDate() + "/" + date.getFullYear();
+					}
+				},
+				{
+					data: "deliveryDate",
+					render: function (data) {
+						const date = new Date(data);
+						const month = date.getMonth() + 1;
+						return (month.toString().length > 1 ? month : "0" + month) + "/" + date.getDate() + "/" + date.getFullYear();
+					}
+				},
+				{
+					data: "customerName"
+				},
+				{
+					data: "totalAmount"
+				}
+			];
+
+
+			const table = getTable("completedOrders", "/api/orders/get-completed-orders", cols, false);
+		});
+
+	</script>
+}

@@ -3,34 +3,46 @@
 	ViewData["Title"] = "Items";
 }
 
-<!-- [ breadcrumb ] start -->
-<div class="page-header">
-	<div class="page-block">
-		<div class="row align-items-center">
-			<div class="col-md-12">
-				<div class="page-header-title">
-					<h3 class="m-b-10">Items</h3>
-					<div class="">
-						<button class="btn btn-square btn-dark"
-						        onclick="showInPopup('@Url.Action("AddOrEdit","Item",null,Context.Request.Scheme)', 'New Item')">
-							New Item
-						</button>
-						<button class="refresh-table btn btn-square btn-light">Refresh</button>
+
+<div class="card">
+	<div class="card-header">
+		<h3 class="m-b-10">Items</h3>
+
+	</div>
+	<div class="card-block">
+		<!-- [ breadcrumb ] start -->
+		<div class="page-header">
+			<div class="page-block">
+				<div class="row align-items-center">
+					<div class="col-md-12">
+						<div class="page-header-title">
+							<div class="">
+								<button class="btn btn-square btn-dark"
+								        onclick="showInPopup('@Url.Action("AddOrEdit","Item",null,Context.Request.Scheme)', 'New Item')">
+									New Item
+								</button>
+								<button class="refresh-table btn btn-square btn-light">Refresh</button>
+							</div>
+						</div>
 					</div>
+				</div>
+			</div>
+		</div>
+		<!-- [ breadcrumb ] end -->
+
+		<div class="main-body">
+			<div class="page-wrapper">
+				<div class="card-block" id="view-all">
+					<partial name="_ItemList" />
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
-<!-- [ breadcrumb ] end -->
 
-<div class="main-body">
-	<div class="page-wrapper">
-		<div class="card-block" id="view-all">
-			<partial name="_ItemList" />
-		</div>
-	</div>
-</div>
+
+
+
 @section Scripts{
 	<script>
 		$(document).ready(function () {

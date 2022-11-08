@@ -2,27 +2,40 @@
 @{
 	ViewData["Title"] = "Edit Order";
 }
+<div class="card">
+	<div class="card-header">
+		<h3 class="m-b-10">Edit Order - @(Model.Order.Customer.Name) - @(Model.Order.Customer.Contact)</h3>
 
-
-<!-- [ breadcrumb ] start -->
-<div class="page-header">
-	<div class="page-block">
-		<div class="row align-items-center">
-			<div class="col-md-12">
-				<div class="page-header-title">
-					<h3 class="m-b-10">Edit Order - @(Model.Order.Customer.Name) - @(Model.Order.Customer.Contact)</h3>
+	</div>
+	<div class="card-block">
+		<!-- [ breadcrumb ] start -->
+		<div class="page-header">
+			<div class="page-block">
+				<div class="row align-items-center">
+					<div class="col-md-12">
+						<div class="page-header-title">
+						</div>
+					</div>
 				</div>
+			</div>
+		</div>
+		<!-- [ breadcrumb ] end -->
+
+	
+		<div class="main-body">
+			<div class="page-wrapper">
+				@await Html.PartialAsync("_OrderForm",Model)
 			</div>
 		</div>
 	</div>
 </div>
-<!-- [ breadcrumb ] end -->
 
-<div class="main-body">
-	<div class="page-wrapper">
-		@await Html.PartialAsync("_OrderForm",Model);
-	</div>
-</div>
+
+
+
+
+
+
 
 @section Scripts
 	{
@@ -60,13 +73,7 @@
 				saveRecord("/api/orders/add-order-item", data, table, "Item added in cart.");
 			});
 
-			$("#advancePayment").on('change', function () {
-				const totalAmount = parseInt($("#totalAmount").val().replace(/,/g, ''));
-				const advancePayment = parseInt($("#advancePayment").val().replace(/,/g, ''));
-				const balance = totalAmount - advancePayment;
-				$("#balance").val(balance);
 
-			});
 
 			saveOrder = form => {
 				try {

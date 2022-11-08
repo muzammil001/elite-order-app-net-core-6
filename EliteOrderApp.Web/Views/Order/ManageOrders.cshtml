@@ -2,40 +2,49 @@
 	ViewData["Title"] = "Manage Orders";
 	Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<div class="card">
+	<div class="card-header">
+		<h3 class="m-b-10">Manage Orders</h3>
 
-<!-- [ breadcrumb ] start -->
-<div class="page-header">
-	<div class="page-block">
-		<div class="row align-items-center">
-			<div class="col-md-12">
-				<div class="page-header-title">
-					<h3 class="m-b-10">Manage Orders</h3>
+	</div>
+	<div class="card-block">
+		<!-- [ breadcrumb ] start -->
+		<div class="page-header">
+			<div class="page-block">
+				<div class="row align-items-center">
+					<div class="col-md-12">
+						<div class="page-header-title">
+							<a href="@Url.Action("Index","Order")" class="btn btn-primary">Add New Order</a>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-</div>
-<!-- [ breadcrumb ] end -->
+		<!-- [ breadcrumb ] end -->
 
-<div class="main-body">
-	<div class="page-wrapper">
-		<table id="orders" class="display table  compact ">
-			<thead>
-				<tr>
-					<th>Order Date</th>
-					<th>Delivery Date</th>
-					<th>Customer Name</th>
-					<th>Customer Contact</th>
-					<th>Actions</th>
-				</tr>
-			</thead>
-			<tbody>
-			</tbody>
-			<tfoot>
-			</tfoot>
-		</table>
-	</div>
+		<div class="main-body">
+			<div class="page-wrapper">
+				<table id="orders" class="display table  compact">
+					<thead>
+					<tr>
+						<th>Order Date</th>
+						<th>Delivery Date</th>
+						<th>Customer Name</th>
+						<th>Balance</th>
+						<th>Actions</th>
+					</tr>
+					</thead>
+					<tbody>
+					</tbody>
+					<tfoot>
+					</tfoot>
+				</table>
+			</div>
 
+		</div>
+
+
+	</div>
 </div>
 
 
@@ -61,17 +70,18 @@
 					}
 				},
 				{
-					data: "customer.name"
+					data: "customerName"
 				},
 				{
-					data: "customer.contact"
+					data: "balance"
 				},
 				{
 					data: "id",
 					render: function(data) {
-						return `<button type="button" class="btn btn-icon btn-rounded btn-primary" data-orderItem-id=${data} title='View Invoice'><i class="feather icon-file-text"></i></button>`
-							+ `<a href="/Order/EditOrder/${data}" type="button" class="btn btn-icon btn-rounded btn-info" title='Edit Order'><i class="feather icon-edit"></i></a>`
-							+ `<button type="button" class="btn btn-icon btn-rounded btn-info" data-orderItem-id=${data} title='Payment History'><i class="fas fas fa-money-bill-alt"></i></button>`
+						return `<button type="button" class="btn btn-icon btn-rounded btn-primary" data-orderItem-id=${data} title='View Invoice'><i class="feather icon-file-text"></i></button>` 
+							+ `<a href="/Order/EditOrder/${data}" type="button" class="btn btn-icon btn-rounded btn-info" title='Edit Order'><i class="feather icon-edit"></i></a>` 
+							+ `<button type="button" class="btn btn-icon btn-rounded btn-info" data-orderItem-id=${data} title='Payment History'><i class="fas fas fa-money-bill-alt"></i></button>` 
+							+ `<button type="button" class="btn btn-icon btn-rounded btn-success js-complete-order" data-orderItem-id=${data} title='Complete this Order'><i class="feather icon-check"></i></button>` 
 							+ `<button type="button" class="btn btn-icon btn-rounded btn-danger js-delete-order" data-orderItem-id=${data} title='Delete Order'><i class="feather icon-trash"></i></button>`;
 					}
 				}
@@ -79,7 +89,7 @@
 
 
 			const table = getTable("orders", "/api/orders/get-pending-orders", cols, false);
-			deleteRecord("orders", ".js-delete-order", "/api/orders/delete-customer/", "data-orderItem-id", table);
+			deleteRecord("orders", ".js-delete-order", "/api/orders/delete-order/", "data-orderItem-id", table);
 
 		});
 

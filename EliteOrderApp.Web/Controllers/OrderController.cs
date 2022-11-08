@@ -57,6 +57,10 @@ namespace EliteOrderApp.Web.Controllers
         {
             return View();
         }
+        public IActionResult CompletedOrders()
+        {
+            return View();
+        }
 
         public async Task<IActionResult> EditOrder(int id)
         {
@@ -101,7 +105,7 @@ namespace EliteOrderApp.Web.Controllers
                     OrderDate = model.Order.OrderDate,
                     DeliveryDate = model.Order.DeliveryDate,
                     CustomerId = model.Order.CustomerId ?? 0,
-                    TotalAmount = Convert.ToInt32(model.Order.AdvancePayment.Replace(",","")),
+                    TotalAmount = Convert.ToInt32(model.Order.TotalAmount.Replace(",","")),
                     AdvancePayment = Convert.ToInt32(model.Order.AdvancePayment.Replace(",", "")),
                     IsPending = true,
                     IsCompleted = false,
@@ -126,15 +130,21 @@ namespace EliteOrderApp.Web.Controllers
             else
             {
                 var orderInDb = await _orderService.GetOrder(id);
-                var order = _mapper.Map(model.Order, orderInDb);
-                _orderService.UpdateOrder(order);
+
+
+                orderInDb.OrderDate = model.Order.OrderDate;
+                orderInDb.DeliveryDate = model.Order.DeliveryDate;
+                orderInDb.CustomerId = model.Order.CustomerId ?? 0;
+                orderInDb.TotalAmount = Convert.ToInt32(model.Order.TotalAmount.Replace(",", ""));
+                orderInDb.AdvancePayment = Convert.ToInt32(model.Order.AdvancePayment.Replace(",", ""));
+
+
+                _orderService.UpdateOrder(orderInDb);
 
                 //clearing cart 
                 _cartItemService.ClearCart();
 
-                return NoContent();
-
-               
+                return Json(new { isValid = true, html = "" });
             }
         }
 

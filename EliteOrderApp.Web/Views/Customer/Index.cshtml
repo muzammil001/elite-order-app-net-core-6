@@ -1,43 +1,48 @@
 ﻿@{
 	ViewData["Title"] = "Customers";
 }
-
-<!-- [ breadcrumb ] start -->
-<div class="page-header">
-	<div class="page-block">
-		<div class="row align-items-center">
-			<div class="col-md-12">
-				<div class="page-header-title">
-					<h3 class="m-b-10"></h3>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-<!-- [ breadcrumb ] end -->
-
-<div class="main-body">
-	<div class="page-wrapper">
-		<div class="row">
-			<div class="col-sm-12">
-				<div class="card">
-					<div class="card-header">
-						<h2>Customers</h2>
-						<div class="">
-							<button class="btn btn-square btn-dark"
-									onclick="showInPopup('@Url.Action("AddOrEdit","Customer",null,Context.Request.Scheme)', 'New Customer')">
-								New Customer
-							</button>
-							<button class="refresh-table btn btn-square btn-light">Refresh</button>
+<div class="card">
+	<div class="card-header">Customers</div>
+	<div class="card-block">
+		<!-- [ breadcrumb ] start -->
+		<div class="page-header">
+			<div class="page-block">
+				<div class="row align-items-center">
+					<div class="col-md-12">
+						<div class="page-header-title">
+							<h3 class="m-b-10"></h3>
 						</div>
 					</div>
-					<div class="card-block" id="view-all">
-						<partial name="_CustomerList" />
-					</div>
 				</div>
 			</div>
-
 		</div>
+		<!-- [ breadcrumb ] end -->
+
+		<div class="main-body">
+			<div class="page-wrapper">
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="card">
+							<div class="card-header">
+								<h2>Customers</h2>
+								<div class="">
+									<button class="btn btn-square btn-dark"
+									        onclick="showInPopup('@Url.Action("AddOrEdit","Customer",null,Context.Request.Scheme)', 'New Customer')">
+										New Customer
+									</button>
+									<button class="refresh-table btn btn-square btn-light">Refresh</button>
+								</div>
+							</div>
+							<div class="card-block" id="view-all">
+								<partial name="_CustomerList" />
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
 	</div>
 </div>
 

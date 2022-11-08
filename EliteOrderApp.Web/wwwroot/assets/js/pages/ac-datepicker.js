@@ -25,6 +25,7 @@ $(document).ready(function () {
         keyboardNavigation: false,
         forceParse: false,
         todayHighlight: true,
+        
     });
 
     $('#disp_week').datepicker({
