@@ -1,4 +1,12 @@
 ﻿@model EliteOrderApp.Web.Models.OrderModel
+<button class="btn btn-square btn-dark"
+        onclick="showInPopup('@Url.Action("AddOrEdit","Customer",null,Context.Request.Scheme)', 'New Customer')">
+	New Customer
+</button>
+<button class="btn btn-square btn-dark"
+        onclick="showInPopup('@Url.Action("AddOrEdit","Item",null,Context.Request.Scheme)', 'New Item')">
+	New Item
+</button>
 <form asp-action="SaveOrder" asp-route-id="@Model.Order.Id" onsubmit="return saveOrder(this);" autocomplete="off">
 	<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 	<input type="hidden" asp-for="Order.Id" id="orderId" />
@@ -20,9 +28,9 @@
 		<div class="row">
 			<div class="col-md-12">
 				<label asp-for="Order.CustomerId" class="control-label"></label>
-				@Html.DropDownListFor(p => p.Order.CustomerId,
-					new SelectList(Model.Customers, "Id", "Name"), "---Select Customer---",
-				new { @class = "form-control js-example-basic-single" })
+				<div id="customerDropdown">
+					<partial name="_CustomerDropDownList"/>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -30,10 +38,10 @@
 		<div class="row">
 			<div class="col-md-4">
 				<label asp-for="Order.ItemId" class="control-label"></label>
-				@Html.DropDownListFor(p => p.Order.ItemId,
-					new SelectList(Model.Items, "Id", "Name"),
-					new { @class = "form-control", @id = "item" })
-
+			
+				<div id="itemDropDownList">
+					<partial name="_ItemDropDownList"/>
+				</div>
 				<div class="mt-5 ml-3">
 					<div class="row">
 						<div class="input-group input-group-sm mb-3">

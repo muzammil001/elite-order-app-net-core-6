@@ -55,6 +55,35 @@ function deleteRecord(tableId, buttonId, url, buttonDataId, table) {
     });
 }
 
+function approvedRecord(tableId, buttonId, url, buttonDataId, table,confirmMsg) {
+
+    $(`#${tableId}`).on("click", buttonId, function (e) {
+        var button = $(this);
+        bootbox.confirm(confirmMsg,
+            function (result) {
+                if (result) {
+                    $.ajax({
+                        url: `${url}` + button.attr(`${buttonDataId}`),
+                        method: "GET",
+                        success: function () {
+                            new PNotify({
+                                title: 'Record has been updated.',
+                                type: 'success'
+                            });
+                            table.row(button.parents("tr")).remove().draw();
+                        },
+                        error: function (err) {
+                            new PNotify({
+                                title: err.responseText,
+                                type: 'error'
+                            });
+                        }
+                    });
+                }
+            });
+    });
+}
+
 function refreshTable(table) {
     table.ajax.reload(null, false);
 }

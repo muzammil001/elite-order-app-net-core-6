@@ -15,16 +15,18 @@ namespace EliteOrderApp.Web.Controllers
         private readonly ItemService _itemService;
         private readonly CustomerService _customerService;
         private readonly OrderService _orderService;
+        private readonly PaymentService _paymentService;
 
         private readonly IMapper _mapper;
 
-        public OrderController(CartService cartItemService, CustomerService customerService, IMapper mapper, OrderService orderService, ItemService itemService)
+        public OrderController(CartService cartItemService, CustomerService customerService, IMapper mapper, OrderService orderService, ItemService itemService, PaymentService paymentService)
         {
             _cartItemService = cartItemService;
             _customerService = customerService;
             _mapper = mapper;
             _orderService = orderService;
             _itemService = itemService;
+            _paymentService = paymentService;
         }
 
         public async Task<IActionResult> Index()
@@ -53,7 +55,7 @@ namespace EliteOrderApp.Web.Controllers
             }).ToList();
         }
 
-        public  IActionResult ManageOrders()
+        public IActionResult ManageOrders()
         {
             return View();
         }
@@ -70,14 +72,14 @@ namespace EliteOrderApp.Web.Controllers
             var items = await _itemService.GetAll();
             var customers = await _customerService.GetAll();
             var orderInDb = await _orderService.GetOrder(id);
-            
+
             var order = new OrderModel()
             {
                 Order = _mapper.Map<OrderDto>(orderInDb),
                 Items = items.ToList(),
                 Customers = GetCustomerList(customers)
             };
-            return View("EditOrder",order);
+            return View("EditOrder", order);
         }
 
         [HttpPost]
@@ -85,7 +87,7 @@ namespace EliteOrderApp.Web.Controllers
         {
             if (!TryValidateModel(model.Order))
                 return BadRequest(ModelState.GetFullErrorMessage());
-            
+
             if (model.Order.TotalAmount == "0")
             {
                 return BadRequest("Please enter order total amount.");
@@ -105,7 +107,7 @@ namespace EliteOrderApp.Web.Controllers
                     OrderDate = model.Order.OrderDate,
                     DeliveryDate = model.Order.DeliveryDate,
                     CustomerId = model.Order.CustomerId ?? 0,
-                    TotalAmount = Convert.ToInt32(model.Order.TotalAmount.Replace(",","")),
+                    TotalAmount = Convert.ToInt32(model.Order.TotalAmount.Replace(",", "")),
                     AdvancePayment = Convert.ToInt32(model.Order.AdvancePayment.Replace(",", "")),
                     IsPending = true,
                     IsCompleted = false,
@@ -120,6 +122,15 @@ namespace EliteOrderApp.Web.Controllers
                 }).ToList();
                 var orderDetails = _mapper.Map<List<OrderDetail>>(orderDetailsDto);
                 await _orderService.SaveOrderDetail(orderDetails);
+
+                var payment = new PaymentHistory()
+                {
+                    OrderId = orderId,
+                    PaidDate = DateTime.Today,
+                    PaidAmount = Convert.ToInt32(model.Order.AdvancePayment.Replace(",", "")),
+                    Description = "Advance Payment"
+                };
+                await _paymentService.AddPayment(payment);
 
                 //clearing cart 
                 _cartItemService.ClearCart();
@@ -148,6 +159,27 @@ namespace EliteOrderApp.Web.Controllers
             }
         }
 
+        public async Task<ActionResult> CustomerDropDown()
+        {
+            var customers = await _customerService.GetAll();
+
+            var order = new OrderModel()
+            {
+                Customers = GetCustomerList(customers)
+            };
+            return PartialView("_CustomerDropDownList",order);
+        }
+
+        public async Task<ActionResult> ItemDropDown()
+        {
+            var items = await _itemService.GetAll();
+
+            var order = new OrderModel()
+            {
+                Items = items.ToList()
+            };
+            return PartialView("_ItemDropDownList", order);
+        }
 
     }
 }

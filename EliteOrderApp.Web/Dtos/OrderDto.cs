@@ -9,11 +9,12 @@ namespace EliteOrderApp.Web.Dtos
         public int Id { get; set; }
 
         [DisplayName("Order Date")]
-        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime OrderDate { get; set; } = DateTime.Today;
 
         [DisplayName("Delivery Date")]
-        public DateTime DeliveryDate { get; set; } = DateTime.Today;
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+        public DateTime DeliveryDate { get; set; }
 
         [DisplayName("Customers")]
         [Required(ErrorMessage = "Please select Customer")]

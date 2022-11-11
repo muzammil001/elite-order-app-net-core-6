@@ -26,13 +26,13 @@
 			<div class="page-wrapper">
 				<table id="orders" class="display table  compact">
 					<thead>
-					<tr>
-						<th>Order Date</th>
-						<th>Delivery Date</th>
-						<th>Customer Name</th>
-						<th>Balance</th>
-						<th>Actions</th>
-					</tr>
+						<tr>
+							<th>Order Date</th>
+							<th>Delivery Date</th>
+							<th>Customer Name</th>
+							<th>Balance</th>
+							<th>Actions</th>
+						</tr>
 					</thead>
 					<tbody>
 					</tbody>
@@ -49,40 +49,47 @@
 
 
 @section Scripts
-{
+	{
 	<script>
-		$(document).ready(function() {
+		$(document).ready(function () {
 			const cols = [
 				{
 					data: "orderDate",
-					render: function(data) {
+					render: function (data) {
 						const date = new Date(data);
 						const month = date.getMonth() + 1;
-						return (month.toString().length > 1 ? month : "0" + month) + "/" + date.getDate() + "/" + date.getFullYear();
+						const currentDate = (month.toString().length > 1 ? month : "0" + month) + "/" + date.getDate() + "/" + date.getFullYear();
+						return `<span class="font-size-sm-bold-green">${currentDate}</span>`;
 					}
 				},
 				{
 					data: "deliveryDate",
-					render: function(data) {
+					render: function (data) {
 						const date = new Date(data);
 						const month = date.getMonth() + 1;
-						return (month.toString().length > 1 ? month : "0" + month) + "/" + date.getDate() + "/" + date.getFullYear();
+						const currentDate = (month.toString().length > 1 ? month : "0" + month) + "/" + date.getDate() + "/" + date.getFullYear();
+						return `<span class="font-size-sm-bold-crimson">${currentDate}</span>`;
 					}
 				},
 				{
 					data: "customerName"
 				},
 				{
-					data: "balance"
+					data: "balance",
+					render: function (data) {
+						return `<span class="font-size-sm-bold-green">${formatMoney(data)}</span>`;
+					}
+
 				},
 				{
 					data: "id",
-					render: function(data) {
-						return `<button type="button" class="btn btn-icon btn-rounded btn-primary" data-orderItem-id=${data} title='View Invoice'><i class="feather icon-file-text"></i></button>` 
-							+ `<a href="/Order/EditOrder/${data}" type="button" class="btn btn-icon btn-rounded btn-info" title='Edit Order'><i class="feather icon-edit"></i></a>` 
-							+ `<button type="button" class="btn btn-icon btn-rounded btn-info" data-orderItem-id=${data} title='Payment History'><i class="fas fas fa-money-bill-alt"></i></button>` 
-							+ `<button type="button" class="btn btn-icon btn-rounded btn-success js-complete-order" data-orderItem-id=${data} title='Complete this Order'><i class="feather icon-check"></i></button>` 
-							+ `<button type="button" class="btn btn-icon btn-rounded btn-danger js-delete-order" data-orderItem-id=${data} title='Delete Order'><i class="feather icon-trash"></i></button>`;
+					render: function (data) {
+						return `<div class="pull-right">
+								<button type="button" class="btn btn-icon btn-rounded btn-primary" data-orderItem-id=${data} title='View Invoice'><i class="feather icon-file-text"></i></button>`
+							+ `<a href="/Order/EditOrder/${data}" type="button" class="btn btn-icon btn-rounded btn-info" title='Edit Order'><i class="feather icon-edit"></i></a>`
+							+ `<button type="button" class="btn btn-icon btn-rounded btn-info" data-orderItem-id=${data} title='Payment History'><i class="fas fas fa-money-bill-alt"></i></button>`
+							+ `<button type="button" class="btn btn-icon btn-rounded btn-success js-complete-order" data-orderItem-id=${data} title='Complete this Order'><i class="feather icon-check"></i></button>`
+							+ `<button type="button" class="btn btn-icon btn-rounded btn-danger js-delete-order" data-orderItem-id=${data} title='Delete Order'><i class="feather icon-trash"></i></button></div>`;
 					}
 				}
 			];
@@ -90,6 +97,7 @@
 
 			const table = getTable("orders", "/api/orders/get-pending-orders", cols, false);
 			deleteRecord("orders", ".js-delete-order", "/api/orders/delete-order/", "data-orderItem-id", table);
+			approvedRecord("orders", ".js-complete-order", "/api/orders/complete-order/", "data-orderItem-id", table, "Are you sure you want to complete this order?");
 
 		});
 

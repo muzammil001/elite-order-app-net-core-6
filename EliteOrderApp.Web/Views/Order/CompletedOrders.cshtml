@@ -1,7 +1,6 @@
-﻿
-@{
-    ViewData["Title"] = "Completed Orders";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+﻿@{
+	ViewData["Title"] = "Completed Orders";
+	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="card">
@@ -11,12 +10,13 @@
 	<div class="card-block">
 		<table id="completedOrders" class="display table  compact">
 			<thead>
-			<tr>
-				<th>Order Date</th>
-				<th>Delivery Date</th>
-				<th>Customer Name</th>
-				<th>Total Amount</th>
-			</tr>
+				<tr>
+					<th>Order Date</th>
+					<th>Delivery Date</th>
+					<th>Customer Name</th>
+					<th>Total Amount</th>
+					<th>Actions</th>
+				</tr>
 			</thead>
 			<tbody>
 			</tbody>
@@ -50,12 +50,21 @@
 					data: "customerName"
 				},
 				{
-					data: "totalAmount"
+					data: "totalAmount",
+					render: function (data) {
+						return `<span class="font-size-sm-bold-green">${formatMoney(data)}</span>`;
+					}
+				},
+				{
+					data: "id",
+					render: function (data) {
+						return `<button class='btn btn-sm btn-info js-pending-orderItem' type='button' data-orderItem-id=${data}> Pending this order</button>`;
+					}
 				}
 			];
-
-
 			const table = getTable("completedOrders", "/api/orders/get-completed-orders", cols, false);
+			approvedRecord("completedOrders", ".js-pending-orderItem", "/api/orders/pending-order/", "data-orderItem-id", table, "Are you sure you want to pending this order?");
+
 		});
 
 	</script>

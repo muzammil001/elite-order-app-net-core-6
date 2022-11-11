@@ -1,0 +1,5 @@
+﻿@model EliteOrderApp.Web.Models.OrderModel
+
+@Html.DropDownListFor(p => p.Order.ItemId,
+	new SelectList(Model.Items, "Id", "Name"),
+	new { @class = "form-control", @id = "item" })

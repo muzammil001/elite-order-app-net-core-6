@@ -12,7 +12,7 @@ namespace EliteOrderApp.Service
 
     public class OrderService
     {
-        private AppDbContext _context;
+        private readonly AppDbContext _context;
 
         public OrderService(AppDbContext context)
         {
@@ -20,7 +20,7 @@ namespace EliteOrderApp.Service
         }
         public async Task<List<Order>> GetAllPendingOrders()
         {
-            return await _context.Orders.Include(x=>x.Customer).Where(x => x.IsPending).OrderByDescending(x => x.OrderDate).ToListAsync();
+            return await _context.Orders.Include(x => x.Customer).Where(x => x.IsPending).OrderByDescending(x => x.OrderDate).ToListAsync();
         }
         public async Task<List<Order>> GetAllCompletedOrders()
         {
@@ -39,12 +39,37 @@ namespace EliteOrderApp.Service
             return order.Id;
         }
 
-       
+
         public void UpdateOrder(Order order)
         {
             _context.Orders.Update(order);
             _context.SaveChanges();
         }
+
+        public async Task CompleteOrder(int orderId)
+        {
+            var order = await _context.Orders.FirstOrDefaultAsync(x => x.Id == orderId);
+            if (order != null)
+            {
+                order.IsCompleted = true;
+                order.IsPending = false;
+            }
+
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task PendingOrder(int orderId)
+        {
+            var order = await _context.Orders.FirstOrDefaultAsync(x => x.Id == orderId);
+            if (order != null)
+            {
+                order.IsCompleted = false;
+                order.IsPending = true;
+            }
+
+            await _context.SaveChangesAsync();
+        }
+
 
         public async Task DeleteOrder(int id)
         {
@@ -92,14 +117,11 @@ namespace EliteOrderApp.Service
                 await _context.SaveChangesAsync();
             }
         }
-        public async Task<bool> IsItemExists(int itemId,int orderId)
+        public async Task<bool> IsItemExists(int itemId, int orderId)
         {
-            return await _context.OrderDetails.AnyAsync(x => x.ItemId == itemId && x.OrderId==orderId);
+            return await _context.OrderDetails.AnyAsync(x => x.ItemId == itemId && x.OrderId == orderId);
         }
         #endregion
-
-
-
 
     }
 }

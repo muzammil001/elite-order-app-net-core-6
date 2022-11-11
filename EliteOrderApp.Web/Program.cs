@@ -13,6 +13,7 @@ builder.Services.AddTransient<ItemService>();
 builder.Services.AddTransient<CustomerService>();
 builder.Services.AddTransient<CartService>();
 builder.Services.AddTransient<OrderService>();
+builder.Services.AddTransient<PaymentService>();
 
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());

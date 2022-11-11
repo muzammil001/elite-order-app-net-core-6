@@ -6,7 +6,7 @@ namespace EliteOrderApp.Service;
 
 public class ItemService
 {
-    private AppDbContext _context;
+    private readonly AppDbContext _context;
 
     public ItemService(AppDbContext context)
     {

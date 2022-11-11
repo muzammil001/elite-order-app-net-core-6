@@ -14,13 +14,15 @@ namespace EliteOrderApp.Web.Controllers.api
     public class OrdersController : ControllerBase
     {
         private readonly OrderService _orderService;
+        private readonly PaymentService _paymentService;
         private readonly IMapper _mapper;
 
 
-        public OrdersController(OrderService orderService, IMapper mapper)
+        public OrdersController(OrderService orderService, IMapper mapper, PaymentService paymentService)
         {
             _orderService = orderService;
             _mapper = mapper;
+            _paymentService = paymentService;
         }
 
 
@@ -35,7 +37,7 @@ namespace EliteOrderApp.Web.Controllers.api
                 OrderDate = x.OrderDate,
                 DeliveryDate = x.DeliveryDate,
                 CustomerName = $"{x.Customer.Name} - {x.Customer.Contact}",
-                Balance=150, // get from payment history
+                Balance= _paymentService.GetOrderBalance(x.Id),
                 TotalAmount=x.TotalAmount,
             });
             return Ok(model);
@@ -46,13 +48,13 @@ namespace EliteOrderApp.Web.Controllers.api
         public async Task<IActionResult> GetCompletedOrders()
         {
             var list = await _orderService.GetAllCompletedOrders();
-            var model = list.Select(x => new OrderListModel()
+            var model = list.Select( x => new OrderListModel()
             {
                 Id = x.Id,
                 OrderDate = x.OrderDate,
                 DeliveryDate = x.DeliveryDate,
                 CustomerName = $"{x.Customer.Name} - {x.Customer.Contact}",
-                Balance = 150, // get from payment history
+                Balance = _paymentService.GetOrderBalance(x.Id),
                 TotalAmount = x.TotalAmount,
             });
             return Ok(model);
@@ -78,6 +80,20 @@ namespace EliteOrderApp.Web.Controllers.api
             return NoContent();
         }
 
+        [HttpGet]
+        [Route("complete-order/{id}")]
+        public async Task<IActionResult> CompleteOrder(int id)
+        {
+            await _orderService.CompleteOrder(id);
+            return NoContent();
+        }
+        [HttpGet]
+        [Route("pending-order/{id}")]
+        public async Task<IActionResult> PendingOrder(int id)
+        {
+            await _orderService.PendingOrder(id);
+            return NoContent();
+        }
         [HttpGet]
         [Route("get-orders-details/{orderId}")]
         public async Task<IActionResult> GetOrderDetails(int orderId)
