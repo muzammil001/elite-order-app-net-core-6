@@ -1,4 +1,4 @@
-using EliteOrderApp.Database;
+ using EliteOrderApp.Database;
 using EliteOrderApp.Service;
 using EliteOrderApp.Web.Extensions;
 using Microsoft.EntityFrameworkCore;
@@ -14,7 +14,7 @@ builder.Services.AddTransient<CustomerService>();
 builder.Services.AddTransient<CartService>();
 builder.Services.AddTransient<OrderService>();
 builder.Services.AddTransient<PaymentService>();
-
+builder.Services.AddTransient<DbInitializer>();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
@@ -28,6 +28,14 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
+using var scope = app.Services.CreateScope();
+
+var services = scope.ServiceProvider;
+
+var initializer = services.GetRequiredService<DbInitializer>();
+
+initializer.Run();
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

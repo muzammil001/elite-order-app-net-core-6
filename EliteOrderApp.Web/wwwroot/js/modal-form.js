@@ -47,7 +47,6 @@ jQueryAjaxPost = form => {
     } catch (e) {
         console.log(e);
     }
-
     //to prevent form submit event
     return false;
 }
