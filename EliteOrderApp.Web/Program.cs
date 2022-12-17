@@ -2,6 +2,7 @@
 using EliteOrderApp.Service;
 using EliteOrderApp.Web.Extensions;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,7 @@ builder.Services.AddTransient<CartService>();
 builder.Services.AddTransient<OrderService>();
 builder.Services.AddTransient<PaymentService>();
 builder.Services.AddTransient<DbInitializer>();
+builder.Services.AddScoped(_ => new BackupService(builder.Configuration.GetConnectionString("DefaultConnection"), Path.GetDirectoryName(Assembly.GetEntryAssembly().Location)));
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 

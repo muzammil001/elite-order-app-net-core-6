@@ -1,0 +1,88 @@
+﻿@{
+	ViewData["Title"] = "Settings";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="card-block">
+	<!-- [ breadcrumb ] start -->
+	<div class="page-header">
+		<div class="page-block">
+			<div class="row align-items-center">
+				<div class="col-md-12">
+					<div class="page-header-title">
+						<h2 class="m-b-10">Settings</h2>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="main-body">
+	<div class="page-wrapper">
+		<div class="row align-items-center mt-4">
+			<div class="col-md-4">
+				<div class="page-header-title">
+					<h3 class="m-b-10">Backup and Restore</h3>
+				</div>
+			</div>
+
+		</div>
+		<div class="row">
+			<div class="col-md-1">
+				<div class="btn btn-square btn-dark" id="backup-data">Backup data</div>
+			</div>
+			<div class="col-md-1">
+				<div class="btn btn-square btn-dark" id="restoreBackupBtn">Restore data</div>
+			</div>
+			<input type="file" id="restore-file-input" style="display:none" />
+		</div>
+	</div>
+</div>
+
+@section Scripts{
+	<script>
+		$(document).ready(function () {
+
+			$("#backup-data").click(function () {
+
+				$.ajax({
+					url: "@Url.Action("BackUpData","Settings")",
+					method: "POST",
+					success: function () {
+						new PNotify({
+							title: 'Backup data successfully done.',
+							type: 'success'
+						});
+					},
+					error: function (err) {
+						new PNotify({
+							title: err.responseText,
+							type: 'error'
+						});
+					}
+				});
+			});
+			$("#restoreBackupBtn").click(function () {
+
+				$.ajax({
+					url: "@Url.Action("RestoreData","Settings")",
+					method: "POST",
+					success: function () {
+						new PNotify({
+							title: 'Restored data successfully done.',
+							type: 'success'
+						});
+					},
+					error: function (err) {
+						new PNotify({
+							title: err.responseText,
+							type: 'error'
+						});
+					}
+				});
+			});
+
+		});
+	</script>
+}
+
