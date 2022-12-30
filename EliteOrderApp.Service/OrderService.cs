@@ -96,7 +96,9 @@ namespace EliteOrderApp.Service
         public async Task<List<OrderDetail>> GetOrderDetails(int orderId)
         {
             var orderDetail = await _context.OrderDetails
+                .Include(x => x.Order)
                 .Include(x => x.Item)
+                .Include(x => x.Order.Customer)
                 .Where(x => x.OrderId == orderId).ToListAsync();
 
             return orderDetail;

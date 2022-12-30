@@ -85,9 +85,9 @@
 					data: "id",
 					render: function (data) {
 						return `<div class="pull-right">
-								<button type="button" class="btn btn-icon btn-rounded btn-primary" data-orderItem-id=${data} title='View Invoice'><i class="feather icon-file-text"></i></button>`
+												<a href="/Order/OrderInvoice/${data}" target="blank" type="button" class="btn btn-icon btn-rounded btn-primary" data-orderItem-id=${data} title='View Invoice'><i class="feather icon-file-text"></i></button>`
 							+ `<a href="/Order/EditOrder/${data}" type="button" class="btn btn-icon btn-rounded btn-info" title='Edit Order'><i class="feather icon-edit"></i></a>`
-							+ `<button type="button" class="btn btn-icon btn-rounded btn-info" data-orderItem-id=${data} title='Payment History'><i class="fas fas fa-money-bill-alt"></i></button>`
+							+ `<a href="/Order/PaymentHistory/?orderId=${data}" target="blank" type="button" class="btn btn-icon btn-rounded btn-info" title='Payment History'><i class="fas fas fa-money-bill-alt"></i></a>`
 							+ `<button type="button" class="btn btn-icon btn-rounded btn-success js-complete-order" data-orderItem-id=${data} title='Complete this Order'><i class="feather icon-check"></i></button>`
 							+ `<button type="button" class="btn btn-icon btn-rounded btn-danger js-delete-order" data-orderItem-id=${data} title='Delete Order'><i class="feather icon-trash"></i></button></div>`;
 					}

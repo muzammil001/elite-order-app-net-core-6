@@ -1,0 +1,32 @@
+﻿@using DevExpress.AspNetCore
+@using EliteOrderApp.Web.Reports
+@model EliteOrderApp.Web.Models.ReportModel
+@{
+	ViewData["Title"] = Model.PageTitle;
+	Layout = "~/Views/Shared/_Layout.cshtml";
+	var invoice = new SaleInvoice();
+	var history = new PaymentHistoryReport();
+
+	if (Model.IsInvoice)
+	{
+		invoice.DataSource = Model.Invoice;
+	}
+	else
+	{
+		history.DataSource = Model.PaymentHistory;
+	}
+	
+}
+@if (Model.IsInvoice)
+{
+
+@(Html.DevExpress().WebDocumentViewer("WebDocumentViewer")
+	.Height("1000px").Bind(invoice))
+}
+else{
+
+@(Html.DevExpress().WebDocumentViewer("WebDocumentViewer")
+	.Height("1000px").Bind(history))
+}
+
+

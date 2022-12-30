@@ -34,6 +34,19 @@ namespace EliteOrderApp.Service
             return totalBill - totalPaid;
 
         }
+        public int GetAdvanceAmount(int orderId)
+        {
+            var totalPaid = _context.PaymentHistories.Where(x => x.OrderId == orderId).Sum(x => x.PaidAmount);
+            return totalPaid;
 
+        }
+        public async Task<List<PaymentHistory>> GetOrderPaymentHistory(int orderId)
+        {
+            var paymentHistory = await _context.PaymentHistories
+                .Include(x => x.Order.Customer)
+                .Where(x => x.OrderId == orderId).ToListAsync();
+
+            return paymentHistory;
+        }
     }
 }

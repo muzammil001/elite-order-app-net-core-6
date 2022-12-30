@@ -16,10 +16,10 @@ namespace EliteOrderApp.Web.Controllers
         private readonly CustomerService _customerService;
         private readonly OrderService _orderService;
         private readonly PaymentService _paymentService;
-
+        private readonly ReportService _reportService;
         private readonly IMapper _mapper;
 
-        public OrderController(CartService cartItemService, CustomerService customerService, IMapper mapper, OrderService orderService, ItemService itemService, PaymentService paymentService)
+        public OrderController(CartService cartItemService, CustomerService customerService, IMapper mapper, OrderService orderService, ItemService itemService, PaymentService paymentService, ReportService reportService)
         {
             _cartItemService = cartItemService;
             _customerService = customerService;
@@ -27,6 +27,7 @@ namespace EliteOrderApp.Web.Controllers
             _orderService = orderService;
             _itemService = itemService;
             _paymentService = paymentService;
+            _reportService = reportService;
         }
 
         public async Task<IActionResult> Index()
@@ -181,5 +182,33 @@ namespace EliteOrderApp.Web.Controllers
             return PartialView("_ItemDropDownList", order);
         }
 
+        public async Task<IActionResult> OrderInvoice(int id)
+        {
+            var invoice = await _reportService.GetOrderInvoice(id);
+            var model = new ReportModel()
+            {
+                Invoice = invoice,
+                IsInvoice = true,
+                PageTitle = "Invoice"
+            };
+            return View("Report",model);
+        }
+        public IActionResult PaymentHistory(int orderId)
+        {
+            return View();
+        }
+        public async Task<IActionResult> PaymentHistoryReport(int id)
+        {
+            var history = await _reportService.GetOrderPaymentHistoryReport(id);
+            var model = new ReportModel()
+            {
+                PaymentHistory = history,
+                IsInvoice = false,
+                PageTitle = "Payment History"
+
+
+            };
+            return View("Report", model);
+        }
     }
 }
