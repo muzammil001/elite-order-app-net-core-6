@@ -1,21 +1,42 @@
-﻿
+﻿@model EliteOrderApp.Web.Models.PaymentTrackingModel
 @{
 	ViewData["Title"] = "Payment Tracking";
 }
 <div class="card">
 	<div class="card-header">
-		<h3 class="m-b-10">Payment Tracking</h3>
+		<h3 class="m-b-10">Order# @Model.Order.Id</h3>
+		<h3 class="m-b-10">Payment Tracking - @Model.Order.Customer.Name</h3>
 	</div>
 	<div class="card-block">
 		<!-- [ breadcrumb ] start -->
 		<div class="page-header">
 			<div class="page-block">
 				<div class="row align-items-center">
-					<div class="col-md-12">
-						<div class="page-header-title">
-							<a href="@Url.Action("Index","Order")" class="btn btn-primary">Check Payment History</a>
+					<div class="col-md-6">
+						<div class="input-group mb-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text" >Total Bill</span>
+							</div>
+							<input type="text" class="form-control font-size-sm-bold-black" value="@Model.Order.TotalAmount.ToString("##,###")">
+						</div>
+					
+					</div>
+					<div class="col-md-6">
+						<div class="input-group mb-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text" >Balance</span>
+							</div>
+							<input type="text" class="form-control font-size-sm-bold-green" value="@Model.Balance.ToString("##,###")">
 						</div>
 					</div>
+					<div class="col-md-12">
+						<div class="page-header-title">
+							<a href="@Url.Action("PaymentHistoryReport", "Order", new { id = Model.Order.Id })" target="_blank" class="btn btn-primary">Check Payment History</a>
+							<a href="@Url.Action("PaymentHistoryReport", "Order", new { id = Model.Order.Id })" target="_blank" class="btn btn-success">Add New Payment</a>
+						</div>
+					
+					</div>
+				
 				</div>
 			</div>
 		</div>
@@ -23,11 +44,48 @@
 
 		<div class="main-body">
 			<div class="page-wrapper">
-				
-			</div>
 
+				<table id="paymentTracking" class="display table compact">
+					<thead>
+						<tr>
+							<th>Paid Date</th>
+							<th>Paid Amount</th>
+							<th>Balance</th>
+							<th>Info</th>
+							<th>Actions</th>
+						</tr>
+					</thead>
+					<tbody>
+						@foreach (var item in Model.PaymentHistories)
+						{
+							<tr>
+								<td >@item.PaidDate.ToString("d")</td>
+								<td class="font-size-sm-bold-crimson">@item.PaidAmount.ToString("##,###")</td>
+								<td class="font-size-sm-bold-green">@item.Balance.ToString("##,###")</td>
+								<td>@item.Description</td>
+								<td>
+									<button class="btn btn-sm btn-danger js-delete-tracking" data-tracking-id="@item.Id">Delete</button>
+								</td>
+							</tr>
+						}
+					</tbody>
+					<tfoot>
+					</tfoot>
+				</table>
+			</div>
 		</div>
 
 
 	</div>
 </div>
+
+@section Scripts
+	{
+	<script>
+
+		$(document).ready(function () {
+			deleteRecord("paymentTracking", ".js-delete-tracking", "/Order/DeletePaymentTracking/", "data-tracking-id", null);
+		});
+
+	</script>
+}

@@ -168,7 +168,7 @@ namespace EliteOrderApp.Web.Controllers
             {
                 Customers = GetCustomerList(customers)
             };
-            return PartialView("_CustomerDropDownList",order);
+            return PartialView("_CustomerDropDownList", order);
         }
 
         public async Task<ActionResult> ItemDropDown()
@@ -191,12 +191,9 @@ namespace EliteOrderApp.Web.Controllers
                 IsInvoice = true,
                 PageTitle = "Invoice"
             };
-            return View("Report",model);
+            return View("Report", model);
         }
-        public IActionResult PaymentHistory(int orderId)
-        {
-            return View();
-        }
+
         public async Task<IActionResult> PaymentHistoryReport(int id)
         {
             var history = await _reportService.GetOrderPaymentHistoryReport(id);
@@ -205,10 +202,57 @@ namespace EliteOrderApp.Web.Controllers
                 PaymentHistory = history,
                 IsInvoice = false,
                 PageTitle = "Payment History"
-
-
             };
             return View("Report", model);
+        }
+
+        public async Task<IActionResult> PaymentHistory(int orderId)
+        {
+            var order= await _orderService.GetOrder(orderId);
+
+            var paymentTracking = await LoadPaymentHistories(orderId);
+
+            var model = new PaymentTrackingModel()
+            {
+                Order = order,
+                Balance = _paymentService.GetOrderBalance(orderId),
+                PaymentHistories = paymentTracking
+            };
+            return View(model);
+        }
+
+        private async Task<List<PaymentHistoryDto>> LoadPaymentHistories( int orderId)
+        {
+            var paymentHistoryList = new List<PaymentHistoryDto>();
+            var data = await _paymentService.GetOrderPaymentHistory(orderId);
+
+            var totalAmount = 0;
+            var orderInDb = await _orderService.GetOrder(orderId);
+            if (orderInDb != null)
+            {
+                totalAmount = orderInDb.TotalAmount;
+
+            }
+            foreach (var item in data.OrderBy(x => x.PaidDate))
+            {
+                var balance = totalAmount -= item.PaidAmount;
+                paymentHistoryList.Add(new PaymentHistoryDto()
+                {
+                    Id = item.Id,
+                    PaidDate = item.PaidDate,
+                    PaidAmount = item.PaidAmount,
+                    Balance = balance,
+                    Description = item.Description
+                    
+                });
+            }
+            return paymentHistoryList;
+        }
+
+        public async Task<IActionResult> DeletePaymentTracking(int id)
+        {
+            await _paymentService.DeletePaymentItem(id);
+            return Json("Item has been deleted.");
         }
     }
 }

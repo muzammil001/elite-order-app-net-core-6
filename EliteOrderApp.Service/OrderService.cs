@@ -28,7 +28,7 @@ namespace EliteOrderApp.Service
         }
         public async Task<Order> GetOrder(int id)
         {
-            var order = await _context.Orders.FirstOrDefaultAsync(x => x.Id == id);
+            var order = await _context.Orders.Include(x=>x.Customer).FirstOrDefaultAsync(x => x.Id == id);
             return order;
         }
 

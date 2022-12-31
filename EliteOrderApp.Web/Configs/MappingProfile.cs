@@ -17,7 +17,7 @@ namespace EliteOrderApp.Web.Configs
 			CreateMap<Order, OrderDto>().ReverseMap();
 
 			CreateMap<OrderDetail, OrderDetailDto>().ReverseMap();
-			CreateMap<PaymentHistory, PaymentDto>().ReverseMap();
+			CreateMap<PaymentHistory, PaymentHistoryDto>().ReverseMap();
 		}
 	}
 }

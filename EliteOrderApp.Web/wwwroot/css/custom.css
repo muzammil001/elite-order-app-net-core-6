@@ -1,15 +1,19 @@
 ﻿.font-size-sm-bold-green {
-    font-weight: bolder;
-    font-size: 18px;
-    color: seagreen;
+    font-weight: bolder !important;
+    font-size: 18px !important;
+    color: seagreen !important;
 }
 
 .font-size-sm-bold-crimson {
-    font-weight: bolder;
-    font-size: 18px;
-    color: crimson;
+    font-weight: bolder !important;
+    font-size: 18px !important;
+    color: crimson !important;
 }
-
+.font-size-sm-bold-black {
+    font-weight: bolder !important;
+    font-size: 18px !important;
+    color: black !important;
+}
 .pull-right{
     float: right;
 }
