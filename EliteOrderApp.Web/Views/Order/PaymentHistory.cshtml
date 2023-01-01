@@ -15,16 +15,16 @@
 					<div class="col-md-6">
 						<div class="input-group mb-3">
 							<div class="input-group-prepend">
-								<span class="input-group-text" >Total Bill</span>
+								<span class="input-group-text">Total Bill</span>
 							</div>
 							<input type="text" class="form-control font-size-sm-bold-black" value="@Model.Order.TotalAmount.ToString("##,###")">
 						</div>
-					
+
 					</div>
 					<div class="col-md-6">
 						<div class="input-group mb-3">
 							<div class="input-group-prepend">
-								<span class="input-group-text" >Balance</span>
+								<span class="input-group-text">Balance</span>
 							</div>
 							<input type="text" class="form-control font-size-sm-bold-green" value="@Model.Balance.ToString("##,###")">
 						</div>
@@ -32,11 +32,14 @@
 					<div class="col-md-12">
 						<div class="page-header-title">
 							<a href="@Url.Action("PaymentHistoryReport", "Order", new { id = Model.Order.Id })" target="_blank" class="btn btn-primary">Check Payment History</a>
-							<a href="@Url.Action("PaymentHistoryReport", "Order", new { id = Model.Order.Id })" target="_blank" class="btn btn-success">Add New Payment</a>
-						</div>
-					
+							<button class="btn btn-square btn-dark"
+							        onclick="showInPopup('@Url.Action("AddOrEditPayment","Order",new{orderId=Model.Order.Id},Context.Request.Scheme)', 'New Payment')">
+								New Payment
+							</button>
+							</div>
+
 					</div>
-				
+
 				</div>
 			</div>
 		</div>
@@ -56,10 +59,10 @@
 						</tr>
 					</thead>
 					<tbody>
-						@foreach (var item in Model.PaymentHistories)
+					@*	@foreach (var item in Model.PaymentHistories)
 						{
 							<tr>
-								<td >@item.PaidDate.ToString("d")</td>
+								<td>@item.PaidDate.ToString("d")</td>
 								<td class="font-size-sm-bold-crimson">@item.PaidAmount.ToString("##,###")</td>
 								<td class="font-size-sm-bold-green">@item.Balance.ToString("##,###")</td>
 								<td>@item.Description</td>
@@ -67,7 +70,7 @@
 									<button class="btn btn-sm btn-danger js-delete-tracking" data-tracking-id="@item.Id">Delete</button>
 								</td>
 							</tr>
-						}
+						}*@
 					</tbody>
 					<tfoot>
 					</tfoot>
@@ -80,11 +83,46 @@
 </div>
 
 @section Scripts
-	{
+{
 	<script>
 
-		$(document).ready(function () {
-			deleteRecord("paymentTracking", ".js-delete-tracking", "/Order/DeletePaymentTracking/", "data-tracking-id", null);
+		$(document).ready(function() {
+			const cols = [
+				{
+					data: "paidDate",
+					render: function(data) {
+						const date = new Date(data);
+						const month = date.getMonth() + 1;
+						const currentDate = (month.toString().length > 1 ? month : "0" + month) + "/" + date.getDate() + "/" + date.getFullYear();
+						return `<span>${currentDate}</span>`;
+					}
+				},
+				{
+					data: "paidAmount",
+					render: function(data) {
+						return `<span class="font-size-sm-bold-crimson">${formatMoney(data)}</span>`;
+					}
+				},
+				{
+					data: "balance",
+					render: function(data) {
+						return `<span class="font-size-sm-bold-green">${formatMoney(data)}</span>`;
+					}
+				},
+				{
+					data: "description"
+				},
+				{
+					data: "id",
+					render: function(data) {
+						return `<button class="btn btn-sm btn-danger js-delete-tracking" data-tracking-id="${data}">Delete</button>`;
+					}
+				}
+			];
+			const table = getTable("paymentTracking", `/Order/GetPaymentTracking?orderId=${@Model.Order.Id}`, cols, false);
+			deleteRecord("paymentTracking", ".js-delete-tracking", "/Order/DeletePaymentTracking/", "data-tracking-id", table);
+			//using for refreshing table
+			refreshTableOnClick(".refresh-table", table);
 		});
 
 	</script>

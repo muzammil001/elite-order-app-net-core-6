@@ -27,6 +27,7 @@
 				<table id="orders" class="display table  compact">
 					<thead>
 						<tr>
+							<th>Order No</th>
 							<th>Order Date</th>
 							<th>Delivery Date</th>
 							<th>Customer Name</th>
@@ -49,13 +50,22 @@
 
 
 @section Scripts
-	{
+{
 	<script>
-		$(document).ready(function () {
+		$(document).ready(function() {
 			const cols = [
+				//{
+				//	data: "id",
+				//	render: function (data, type, row, meta) {
+				//		return meta.row + meta.settings._iDisplayStart + 1;
+				//	}
+				//},
+				{
+					data: "id"
+				},
 				{
 					data: "orderDate",
-					render: function (data) {
+					render: function(data) {
 						const date = new Date(data);
 						const month = date.getMonth() + 1;
 						const currentDate = (month.toString().length > 1 ? month : "0" + month) + "/" + date.getDate() + "/" + date.getFullYear();
@@ -64,7 +74,7 @@
 				},
 				{
 					data: "deliveryDate",
-					render: function (data) {
+					render: function(data) {
 						const date = new Date(data);
 						const month = date.getMonth() + 1;
 						const currentDate = (month.toString().length > 1 ? month : "0" + month) + "/" + date.getDate() + "/" + date.getFullYear();
@@ -72,32 +82,47 @@
 					}
 				},
 				{
-					data: "customerName"
+					data: "customerName",
+					render: function(data, type, order) {
+
+						return `<button class='btn btn-link js-edit-customer' data-customer-id=${order.customerId}>${order.customerName}</button>`;
+					}
 				},
 				{
 					data: "balance",
-					render: function (data) {
+					render: function(data) {
 						return `<span class="font-size-sm-bold-green">${formatMoney(data)}</span>`;
 					}
 
 				},
 				{
 					data: "id",
-					render: function (data) {
+					render: function (data,type, order) {
 						return `<div class="pull-right">
-												<a href="/Order/OrderInvoice/${data}" target="blank" type="button" class="btn btn-icon btn-rounded btn-primary" data-orderItem-id=${data} title='View Invoice'><i class="feather icon-file-text"></i></button>`
-							+ `<a href="/Order/EditOrder/${data}" type="button" class="btn btn-icon btn-rounded btn-info" title='Edit Order'><i class="feather icon-edit"></i></a>`
-							+ `<a href="/Order/PaymentHistory/?orderId=${data}" target="blank" type="button" class="btn btn-icon btn-rounded btn-info" title='Payment History'><i class="fas fas fa-money-bill-alt"></i></a>`
-							+ `<button type="button" class="btn btn-icon btn-rounded btn-success js-complete-order" data-orderItem-id=${data} title='Complete this Order'><i class="feather icon-check"></i></button>`
-							+ `<button type="button" class="btn btn-icon btn-rounded btn-danger js-delete-order" data-orderItem-id=${data} title='Delete Order'><i class="feather icon-trash"></i></button></div>`;
+												<a href="/Order/OrderInvoice/${data}" target="blank" type="button" class="btn btn-icon btn-rounded btn-primary" data-orderItem-id=${data} title='View Invoice'><i class="feather icon-file-text"></i></button>` +
+							`<a href="/Order/EditOrder/${data}" type="button" class="btn btn-icon btn-rounded btn-info" title='Edit Order'><i class="feather icon-edit"></i></a>` +
+							`<a href="/Order/PaymentHistory/?orderId=${data}" target="blank" type="button" class="btn btn-icon btn-rounded btn-info" title='Payment History'><i class="fas fas fa-money-bill-alt"></i></a>` +
+							`<button type="button" class="btn btn-icon btn-rounded btn-success js-complete-order" data-orderItem-id=${data} title='Complete this Order'><i class="feather icon-check"></i></button>` +
+							`<button type="button" class="btn btn-icon btn-rounded btn-danger js-delete-order" data-orderItem-id=${data} title='Delete Order'><i class="feather icon-trash"></i></button></div>`;
+
 					}
 				}
 			];
 
-
+			//rendering the table
 			const table = getTable("orders", "/api/orders/get-pending-orders", cols, false);
+			
+			//deleting the order
 			deleteRecord("orders", ".js-delete-order", "/api/orders/delete-order/", "data-orderItem-id", table);
+			
+			//completing the order
 			approvedRecord("orders", ".js-complete-order", "/api/orders/complete-order/", "data-orderItem-id", table, "Are you sure you want to complete this order?");
+			
+			//editing customer
+			editRecord("orders", ".js-edit-customer", "/Customer/AddOrEdit/", "data-customer-id", "Edit Customer");
+			
+			//using for refreshing table
+			refreshTableOnClick(".refresh-table", table);
 
 		});
 

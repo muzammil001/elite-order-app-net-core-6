@@ -29,7 +29,7 @@ jQueryAjaxPost = form => {
                         title: 'Record has been saved.',
                         type: 'success'
                     });
-                    $(".refresh-table").click();
+                    $(".refresh-table").click(); // this button is resides in Footer Partial.
                 } else
                     $('#form-modal .modal-body').html(res.html);
             },

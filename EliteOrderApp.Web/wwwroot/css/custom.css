@@ -17,3 +17,6 @@
 .pull-right{
     float: right;
 }
+.refresh-table {
+    display: none !important
+}

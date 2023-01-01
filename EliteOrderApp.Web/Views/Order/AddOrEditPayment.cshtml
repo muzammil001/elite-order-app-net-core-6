@@ -1,0 +1,33 @@
+﻿@model EliteOrderApp.Web.Dtos.PaymentHistoryDto
+@{
+	ViewData["Title"] = "AddOrEdit";
+	Layout = null;
+}
+
+<div class="row">
+	<div class="col-md-12">
+		<form asp-action="AddOrEditPayment" asp-route-id="@Model.Id" onsubmit="return jQueryAjaxPost(this);" autocomplete="off">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<input type="hidden" asp-for="Id" />
+			<input type="hidden" asp-for="OrderId" />
+			<input type="hidden" asp-for="Description" value="Regular Payment" />
+			<div class="form-group">
+				<label class="control-label" > Paid Date</label>
+				<input asp-for="PaidDate" class="form-control" type="date" />
+				<span asp-validation-for="PaidDate" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label  class="control-label">Paid Amount</label>
+				<input asp-for="PaidAmount" type="text" class="form-control " >
+				<span asp-validation-for="PaidAmount" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<button type="submit" class="btn btn-primary btn-lg">
+					<i class="fas fa-save"></i>
+					Save
+				</button>
+			</div>
+		</form>
+	</div>
+</div>
+

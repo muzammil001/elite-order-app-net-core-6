@@ -6,6 +6,7 @@ using EliteOrderApp.Web.Extensions;
 using EliteOrderApp.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
 namespace EliteOrderApp.Web.Controllers
 {
@@ -194,6 +195,9 @@ namespace EliteOrderApp.Web.Controllers
             return View("Report", model);
         }
 
+
+        #region Payment Tracking
+
         public async Task<IActionResult> PaymentHistoryReport(int id)
         {
             var history = await _reportService.GetOrderPaymentHistoryReport(id);
@@ -208,20 +212,22 @@ namespace EliteOrderApp.Web.Controllers
 
         public async Task<IActionResult> PaymentHistory(int orderId)
         {
-            var order= await _orderService.GetOrder(orderId);
-
-            var paymentTracking = await LoadPaymentHistories(orderId);
-
+            var order = await _orderService.GetOrder(orderId);
             var model = new PaymentTrackingModel()
             {
                 Order = order,
                 Balance = _paymentService.GetOrderBalance(orderId),
-                PaymentHistories = paymentTracking
             };
+
             return View(model);
         }
+        public async Task<IActionResult> GetPaymentTracking(int orderId)
+        {
+            var paymentTracking = await LoadPaymentHistories(orderId);
+            return Json(paymentTracking);
+        }
 
-        private async Task<List<PaymentHistoryDto>> LoadPaymentHistories( int orderId)
+        private async Task<List<PaymentHistoryDto>> LoadPaymentHistories(int orderId)
         {
             var paymentHistoryList = new List<PaymentHistoryDto>();
             var data = await _paymentService.GetOrderPaymentHistory(orderId);
@@ -243,10 +249,58 @@ namespace EliteOrderApp.Web.Controllers
                     PaidAmount = item.PaidAmount,
                     Balance = balance,
                     Description = item.Description
-                    
+
                 });
             }
             return paymentHistoryList;
+        }
+        public async Task<IActionResult> AddOrEditPayment(int id,int orderId)
+        {
+            //Create form 
+            if (id == 0)
+            {
+                return View(new PaymentHistoryDto());
+
+            }
+            //edit form
+            var tracking = await _paymentService.GetPaymentTracking(id);
+            if (tracking == null)
+            {
+                return NotFound();
+            }
+
+            var trackingDto = _mapper.Map<PaymentHistoryDto>(tracking);
+
+            return View(trackingDto);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddOrEditPayment(int id, PaymentHistoryDto historyPaymentDto)
+        {
+            if (ModelState.IsValid)
+            {
+                if (id == 0)
+                {
+
+                    var payment = _mapper.Map<PaymentHistory>(historyPaymentDto);
+                    await _paymentService.AddPayment(payment);
+                }
+                else
+                {
+                    try
+                    {
+                        var payment = _mapper.Map<PaymentHistory>(historyPaymentDto);
+                        _paymentService.UpdatePayment(payment);
+                    }
+                    catch (DbUpdateConcurrencyException)
+                    {
+                        return BadRequest();
+                    }
+                }
+                return Json(new { isValid = true, html = "" });
+            }
+            return Json(new { isValid = false, html = Helper.RenderRazorViewToString(this, "AddOrEditPayment", historyPaymentDto) });
         }
 
         public async Task<IActionResult> DeletePaymentTracking(int id)
@@ -254,5 +308,8 @@ namespace EliteOrderApp.Web.Controllers
             await _paymentService.DeletePaymentItem(id);
             return Json("Item has been deleted.");
         }
+
+        #endregion
+
     }
 }

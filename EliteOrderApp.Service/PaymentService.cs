@@ -18,11 +18,7 @@ namespace EliteOrderApp.Service
             _context = context;
         }
 
-        public async Task AddPayment(PaymentHistory payment)
-        {
-            await _context.PaymentHistories.AddAsync(payment);
-            await _context.SaveChangesAsync();
-        }
+        
         public int GetOrderBalance(int orderId)
         {
             var totalPaid = _context.PaymentHistories.Where(x => x.OrderId == orderId).Sum(x => x.PaidAmount);
@@ -49,7 +45,24 @@ namespace EliteOrderApp.Service
 
             return paymentHistory;
         }
+        public async Task AddPayment(PaymentHistory payment)
+        {
+            await _context.PaymentHistories.AddAsync(payment);
+            await _context.SaveChangesAsync();
+        }
 
+        public void UpdatePayment(PaymentHistory payment)
+        {
+            _context.PaymentHistories.Update(payment);
+            _context.SaveChanges();
+        }
+
+        public async Task<PaymentHistory> GetPaymentTracking(int id)
+        {
+            var payment = await _context.PaymentHistories.FirstOrDefaultAsync(x => x.Id == id);
+            return payment;
+        }
+       
         public async Task DeletePaymentItem(int id)
         {
             var payment = await _context.PaymentHistories.FirstOrDefaultAsync(x => x.Id == id);

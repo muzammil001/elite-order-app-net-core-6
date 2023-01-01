@@ -37,6 +37,7 @@ namespace EliteOrderApp.Web.Controllers.api
                 OrderDate = x.OrderDate,
                 DeliveryDate = x.DeliveryDate,
                 CustomerName = $"{x.Customer.Name} - {x.Customer.Contact}",
+                CustomerId = x.CustomerId,
                 Balance= _paymentService.GetOrderBalance(x.Id),
                 TotalAmount=x.TotalAmount,
             });

@@ -7,6 +7,5 @@ namespace EliteOrderApp.Web.Models
     {
         public Order Order { get; set; }
         public int Balance { get; set; }
-        public List<PaymentHistoryDto> PaymentHistories { get; set; }
     }
 }

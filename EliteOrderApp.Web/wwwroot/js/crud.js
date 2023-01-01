@@ -93,7 +93,11 @@ function refreshTableOnClick(buttonId, table) {
         table.ajax.reload(null, false);
     });
 }
-
+function refreshPage(timeSpan) {
+    setInterval(function () {
+        window.location.reload(); // user paging is not reset on reload
+    }, timeSpan);
+}
 
 function refreshTableWithTime(table, timeSpan) {
     setInterval(function () {

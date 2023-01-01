@@ -2,7 +2,7 @@
 	ViewData["Title"] = "Customers";
 }
 <div class="card">
-	<div class="card-header">Customers</div>
+	<div class="card-header"></div>
 	<div class="card-block">
 		<!-- [ breadcrumb ] start -->
 		<div class="page-header">
@@ -24,13 +24,12 @@
 					<div class="col-sm-12">
 						<div class="card">
 							<div class="card-header">
-								<h2>Customers</h2>
+								<h3>Customers</h3>
 								<div class="">
 									<button class="btn btn-square btn-dark"
-									        onclick="showInPopup('@Url.Action("AddOrEdit","Customer",null,Context.Request.Scheme)', 'New Customer')">
+											onclick="showInPopup('@Url.Action("AddOrEdit","Customer",null,Context.Request.Scheme)', 'New Customer')">
 										New Customer
 									</button>
-									<button class="refresh-table btn btn-square btn-light">Refresh</button>
 								</div>
 							</div>
 							<div class="card-block" id="view-all">
@@ -76,11 +75,7 @@
 
 			refreshTableOnClick(".refresh-table", table);
 		});
-
-
 	</script>
 
-
-	
 	}
 
