@@ -32,6 +32,8 @@
 							<th>Delivery Date</th>
 							<th>Customer Name</th>
 							<th>Balance</th>
+							<th>Total Bill</th>
+							<th>Amount Received</th>
 							<th>Actions</th>
 						</tr>
 					</thead>
@@ -92,6 +94,20 @@
 					data: "balance",
 					render: function(data) {
 						return `<span class="font-size-sm-bold-green">${formatMoney(data)}</span>`;
+					}
+
+				},
+				{
+					data: "totalAmount",
+					render: function(data) {
+						return `<span class="font-size-sm-bold-black">${formatMoney(data)}</span>`;
+					}
+
+				},
+				{
+					data: "receivedAmount",
+					render: function (data) {
+						return `<span class="font-size-sm-bold-crimson">${formatMoney(data)}</span>`;
 					}
 
 				},

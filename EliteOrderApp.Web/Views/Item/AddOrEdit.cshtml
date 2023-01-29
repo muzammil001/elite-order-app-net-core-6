@@ -3,7 +3,6 @@
 	ViewData["Title"] = "Add Or Edit Payment";
 	Layout = null;
 }
-
 <div class="row">
 	<div class="col-md-12">
 		<form asp-action="AddOrEdit" asp-route-id="@Model.Id" onsubmit="return jQueryAjaxPost(this);" autocomplete="off">

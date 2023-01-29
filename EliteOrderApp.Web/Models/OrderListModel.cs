@@ -12,5 +12,6 @@ namespace EliteOrderApp.Web.Models
 		public Customer Customer{ get; set; }
 		public int Balance { get; set; }
 		public int TotalAmount { get; set; }
+		public int ReceivedAmount { get; set; }
 	}
 }

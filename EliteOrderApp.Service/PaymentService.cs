@@ -30,7 +30,7 @@ namespace EliteOrderApp.Service
             return totalBill - totalPaid;
 
         }
-        public int GetAdvanceAmount(int orderId)
+        public int GetReceivedAmount(int orderId)
         {
             var totalPaid = _context.PaymentHistories.Where(x => x.OrderId == orderId).Sum(x => x.PaidAmount);
             return totalPaid;

@@ -21,7 +21,6 @@ function editRecord(tableId, buttonId, popUpUrl, buttonDataId, modalTitle) {
         buttonId,
         function () {
             const button = $(this);
-
             showInPopup(`${popUpUrl}${button.attr(`${buttonDataId}`)}`, `${modalTitle}`);
         });
 }

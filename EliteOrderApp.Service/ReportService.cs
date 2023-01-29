@@ -27,7 +27,7 @@ namespace EliteOrderApp.Service
 
             return saleItems.Select(item => new InvoiceModel()
                 {
-                    AdvanceAmount = _paymentService.GetAdvanceAmount(item.OrderId),
+                    AdvanceAmount = _paymentService.GetReceivedAmount(item.OrderId),
                     CustomerName = item.Order.Customer.Name,
                     DeliveryDate = item.Order.DeliveryDate,
                     OrderDate = item.Order.OrderDate,

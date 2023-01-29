@@ -40,6 +40,7 @@ namespace EliteOrderApp.Web.Controllers.api
                 CustomerId = x.CustomerId,
                 Balance= _paymentService.GetOrderBalance(x.Id),
                 TotalAmount=x.TotalAmount,
+                ReceivedAmount = _paymentService.GetReceivedAmount(x.Id)
             });
             return Ok(model);
         }
