@@ -20,3 +20,6 @@
 .refresh-table {
     display: none !important
 }
+.bg-c-crimson {
+    background: crimson !important;
+}

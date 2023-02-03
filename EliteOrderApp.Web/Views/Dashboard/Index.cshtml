@@ -1,8 +1,139 @@
-﻿
+﻿@using EliteOrderApp.Web.Extensions
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Dashboard</h1>
+<div class="main-body">
+    <div class="page-wrapper">
+        <!-- [ Main Content ] start -->
+        <div class="row">
+            <!-- [ bitcoin-wallet section ] start-->
+            <div class="col-md-6 col-xl-4">
+                <div class="card theme-bg bitcoin-wallet">
+                    <div class="card-block">
+                        <h5 class="text-white mb-2">Pending Orders</h5>
+                        <h2 class="text-white mb-2 f-w-300">90</h2>
+                        <span class="text-white d-block">Pending orders up till now</span>
+                        <i class="fas fa-receipt f-70 text-white"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-xl-4">
+                <div class="card theme-bg2 bitcoin-wallet">
+                    <div class="card-block">
+                        <h5 class="text-white mb-2">Upcomming Deliveries</h5>
+                        <h2 class="text-white mb-2 f-w-300">250</h2>
+                        <span class="text-white d-block">Ongoing month - @DateTime.Now.ToMonthName()</span>
+                        <i class="fas fas fa-truck f-70 text-white"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 col-xl-4">
+                <div class="card bg-c-blue bitcoin-wallet">
+                    <div class="card-block">
+                        <h5 class="text-white mb-2">Ongoing Year Revenue</h5>
+                        <h2 class="text-white mb-2 f-w-300">7,501</h2>
+                        <span class="text-white d-block">Year of @DateTime.Now.Year </span>
+                        <i class="fas fa-money-bill-alt f-70 text-white"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 col-xl-4">
+                <div class="card bg-c-crimson bitcoin-wallet">
+                    <div class="card-block">
+                        <h5 class="text-white mb-2">Total Recoveries</h5>
+                        <h2 class="text-white mb-2 f-w-300">7,501</h2>
+                        <span class="text-white d-block">Recoveries from all orders </span>
+                        <i class="fas  fa-dollar-sign f-70 text-white"></i>
+                    </div>
+                </div>
+            </div>
+            <!-- [ bitcoin-wallet section ] end-->
 
+
+            <!-- [ notifications section ] start -->
+            <div class="col-xl-4 col-md-12">
+                <div class="card note-bar">
+                    <div class="card-header">
+                        <h5>Notifications</h5>
+                        <div class="card-header-right">
+                            <div class="btn-group card-option">
+                                <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="feather icon-more-horizontal"></i>
+                                </button>
+                                <ul class="list-unstyled card-option dropdown-menu dropdown-menu-right">
+                                    <li class="dropdown-item full-card">
+                                        <a href="#!">
+                                            <span><i class="feather icon-maximize"></i> maximize</span><span style="display:none"><i class="feather icon-minimize"></i> Restore</span>
+                                        </a>
+                                    </li>
+                                    <li class="dropdown-item minimize-card">
+                                        <a href="#!">
+                                            <span><i class="feather icon-minus"></i> collapse</span><span style="display:none"><i class="feather icon-plus"></i> expand</span>
+                                        </a>
+                                    </li>
+                                    <li class="dropdown-item reload-card">
+                                        <a href="#!"><i class="feather icon-refresh-cw"></i> reload</a>
+                                    </li>
+                                    <li class="dropdown-item close-card">
+                                        <a href="#!"><i class="feather icon-trash"></i> remove</a>
+                                    </li>
+                                </ul>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-block p-0">
+                        <a href="#!" class="media friendlist-box">
+                            <div class="mr-3 photo-table">
+                                <i class="far fa-bell f-30"></i>
+                            </div>
+                            <div class="media-body">
+                                <h6>New order received</h6>
+                                <span class="f-12 float-right text-muted">12.56</span>
+                                <p class="text-muted m-0">2 unread notification</p>
+                            </div>
+                        </a>
+                        <a href="#!" class="media friendlist-box border-top">
+                            <div class="mr-3 photo-table">
+                                <i class="far fa-bell f-30"></i>
+                            </div>
+                            <div class="media-body">
+                                <h6>New user register</h6>
+                                <span class="f-12 float-right text-muted">12.36</span>
+                                <p class="text-muted m-0">xx messages</p>
+                            </div>
+                        </a>
+
+                        <a href="#!" class="media friendlist-box border-top">
+                            <div class="mr-3 photo-table">
+                                <i class="far fa-bell f-30"></i>
+                            </div>
+                            <div class="media-body">
+                                <h6>New order register</h6>
+                                <span class="f-12 float-right text-muted">11.45</span>
+                                <p class="text-muted m-0">2 read notification</p>
+                            </div>
+                        </a>
+
+                        <a href="#!" class="media friendlist-box border-top">
+                            <div class="mr-3 photo-table">
+                                <i class="far fa-bell f-30"></i>
+                            </div>
+                            <div class="media-body">
+                                <h6>New order prepend</h6>
+                                <span class="f-12 float-right text-muted">9.39</span>
+                                <p class="text-muted m-0">xx messages</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- [ notifications section ] end-->
+
+
+        </div>
+        <!-- [ Main Content ] end -->
+    </div>
+</div>

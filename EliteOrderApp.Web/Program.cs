@@ -27,7 +27,9 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddMvc();
 builder.Services.AddDevExpressControls();
 
-
+builder.Services
+    .AddControllersWithViews()
+    .AddRazorRuntimeCompilation();
 
 var app = builder.Build();
 // Configure the HTTP request pipeline.
