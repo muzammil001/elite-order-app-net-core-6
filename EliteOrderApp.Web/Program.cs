@@ -17,6 +17,7 @@ builder.Services.AddTransient<CartService>();
 builder.Services.AddTransient<OrderService>();
 builder.Services.AddTransient<PaymentService>();
 builder.Services.AddTransient<ReportService>();
+builder.Services.AddTransient<DashboardService>();
 builder.Services.AddTransient<DbInitializer>();
 builder.Services.AddScoped(_ =>
     new BackupService(builder.Configuration.GetConnectionString("DefaultConnection"),

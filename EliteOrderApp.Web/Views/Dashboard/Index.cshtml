@@ -1,4 +1,5 @@
 ﻿@using EliteOrderApp.Web.Extensions
+@model EliteOrderApp.Web.Models.DashboardViewModel
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -13,7 +14,7 @@
                 <div class="card theme-bg bitcoin-wallet">
                     <div class="card-block">
                         <h5 class="text-white mb-2">Pending Orders</h5>
-                        <h2 class="text-white mb-2 f-w-300">90</h2>
+                        <h2 class="text-white mb-2 f-w-300">@Model.TotalPendingOrders</h2>
                         <span class="text-white d-block">Pending orders up till now</span>
                         <i class="fas fa-receipt f-70 text-white"></i>
                     </div>
@@ -23,7 +24,7 @@
                 <div class="card theme-bg2 bitcoin-wallet">
                     <div class="card-block">
                         <h5 class="text-white mb-2">Upcomming Deliveries</h5>
-                        <h2 class="text-white mb-2 f-w-300">250</h2>
+                        <h2 class="text-white mb-2 f-w-300"> @Model.TotalUpcomingDeliveries</h2>
                         <span class="text-white d-block">Ongoing month - @DateTime.Now.ToMonthName()</span>
                         <i class="fas fas fa-truck f-70 text-white"></i>
                     </div>
@@ -33,9 +34,10 @@
                 <div class="card bg-c-blue bitcoin-wallet">
                     <div class="card-block">
                         <h5 class="text-white mb-2">Ongoing Year Revenue</h5>
-                        <h2 class="text-white mb-2 f-w-300">7,501</h2>
+                        <h2 class="text-white mb-2 f-w-300">Rs @Model.RevenueByYear.ToString("N0")</h2>
                         <span class="text-white d-block">Year of @DateTime.Now.Year </span>
                         <i class="fas fa-money-bill-alt f-70 text-white"></i>
+                        <span><input type="number" min="1900" max="2099" step="1" value="2020" id="revenueYear" /></span>
                     </div>
                 </div>
             </div>
@@ -43,7 +45,7 @@
                 <div class="card bg-c-crimson bitcoin-wallet">
                     <div class="card-block">
                         <h5 class="text-white mb-2">Total Recoveries</h5>
-                        <h2 class="text-white mb-2 f-w-300">7,501</h2>
+                        <h2 class="text-white mb-2 f-w-300">Rs @Model.CashRecovery.ToString("N0")</h2>
                         <span class="text-white d-block">Recoveries from all orders </span>
                         <i class="fas  fa-dollar-sign f-70 text-white"></i>
                     </div>
@@ -137,3 +139,10 @@
         <!-- [ Main Content ] end -->
     </div>
 </div>
+
+@section Scripts
+{
+    <script>
+    alert("Testing");
+    </script>
+}

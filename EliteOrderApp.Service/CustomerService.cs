@@ -6,7 +6,7 @@ namespace EliteOrderApp.Service;
 
 public class CustomerService
 {
-    private AppDbContext _context;
+    private readonly AppDbContext _context;
 
     public CustomerService(AppDbContext context)
     {
@@ -24,7 +24,7 @@ public class CustomerService
        await _context.SaveChangesAsync();
     }
 
-    public async Task<Customer?> GetCustomer(int key)
+    public async Task<Customer> GetCustomer(int key)
     {
         var customerInDb = await _context.Customers.FirstOrDefaultAsync(x => x.Id == key);
         return customerInDb;

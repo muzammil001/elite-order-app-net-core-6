@@ -10,8 +10,7 @@ namespace EliteOrderApp.Web.Extensions
 
             foreach (var entry in modelState)
             {
-                foreach (var error in entry.Value.Errors)
-                    messages.Add(error.ErrorMessage);
+                messages.AddRange(entry.Value.Errors.Select(error => error.ErrorMessage));
             }
 
             return string.Join(" ", messages);
