@@ -35,9 +35,8 @@
                     <div class="card-block">
                         <h5 class="text-white mb-2">Ongoing Year Revenue</h5>
                         <h2 class="text-white mb-2 f-w-300">Rs @Model.RevenueByYear.ToString("N0")</h2>
-                        <span class="text-white d-block">Year of @DateTime.Now.Year </span>
+                        <span class="text-white d-block">Year - @DateTime.Now.Year</span>
                         <i class="fas fa-money-bill-alt f-70 text-white"></i>
-                        <span><input type="number" min="1900" max="2099" step="1" value="2020" id="revenueYear" /></span>
                     </div>
                 </div>
             </div>
@@ -58,7 +57,7 @@
             <div class="col-xl-4 col-md-12">
                 <div class="card note-bar">
                     <div class="card-header">
-                        <h5>Notifications</h5>
+                        <h5>All Revenues</h5>
                         <div class="card-header-right">
                             <div class="btn-group card-option">
                                 <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -87,48 +86,21 @@
                         </div>
                     </div>
                     <div class="card-block p-0">
-                        <a href="#!" class="media friendlist-box">
-                            <div class="mr-3 photo-table">
-                                <i class="far fa-bell f-30"></i>
-                            </div>
-                            <div class="media-body">
-                                <h6>New order received</h6>
-                                <span class="f-12 float-right text-muted">12.56</span>
-                                <p class="text-muted m-0">2 unread notification</p>
-                            </div>
-                        </a>
-                        <a href="#!" class="media friendlist-box border-top">
-                            <div class="mr-3 photo-table">
-                                <i class="far fa-bell f-30"></i>
-                            </div>
-                            <div class="media-body">
-                                <h6>New user register</h6>
-                                <span class="f-12 float-right text-muted">12.36</span>
-                                <p class="text-muted m-0">xx messages</p>
-                            </div>
-                        </a>
+                        @foreach (var item in Model.RevenueModel)
+                        {
+                            <a href="#!" class="media friendlist-box">
+                                <div class="mr-3 photo-table">
+                                    <i class="feather icon-trending-up f-30"></i>
+                                </div>
 
-                        <a href="#!" class="media friendlist-box border-top">
-                            <div class="mr-3 photo-table">
-                                <i class="far fa-bell f-30"></i>
-                            </div>
-                            <div class="media-body">
-                                <h6>New order register</h6>
-                                <span class="f-12 float-right text-muted">11.45</span>
-                                <p class="text-muted m-0">2 read notification</p>
-                            </div>
-                        </a>
+                                <div class="media-body">
+                                    <h6>Year of @item.Year</h6>
+                                    <span class="f-12 float-right text-muted">@item.Amount.ToString("N0")</span>
+                                </div>
 
-                        <a href="#!" class="media friendlist-box border-top">
-                            <div class="mr-3 photo-table">
-                                <i class="far fa-bell f-30"></i>
-                            </div>
-                            <div class="media-body">
-                                <h6>New order prepend</h6>
-                                <span class="f-12 float-right text-muted">9.39</span>
-                                <p class="text-muted m-0">xx messages</p>
-                            </div>
-                        </a>
+                            </a>
+                        }
+
                     </div>
                 </div>
             </div>
@@ -143,6 +115,5 @@
 @section Scripts
 {
     <script>
-    alert("Testing");
     </script>
 }

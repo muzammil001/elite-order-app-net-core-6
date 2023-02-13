@@ -1,3 +1,5 @@
+using EliteOrderApp.Service;
+
 namespace EliteOrderApp.Web.Models;
 
 public class DashboardViewModel
@@ -6,4 +8,6 @@ public class DashboardViewModel
     public int TotalUpcomingDeliveries { get; set; }
     public int RevenueByYear { get; set; }
     public int CashRecovery { get; set; }
+
+    public List<RevenueModel> RevenueModel { get; set; }
 }

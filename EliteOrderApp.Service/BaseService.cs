@@ -5,7 +5,7 @@ namespace EliteOrderApp.Service;
 
 public class BaseService<T> where T : class
 {
-    public readonly AppDbContext Context;
+    public AppDbContext Context;
 
     
     protected void Save() => Context.SaveChanges();
@@ -47,6 +47,7 @@ public class BaseService<T> where T : class
     {
         return Context.Set<T>().Any();
     }
+    
     public bool Any(Func<T, bool> predicate)
     {
         return Context.Set<T>().Any(predicate);

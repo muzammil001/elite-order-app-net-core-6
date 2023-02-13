@@ -21,6 +21,7 @@ namespace EliteOrderApp.Web.Controllers
                 TotalUpcomingDeliveries = await _dashboardService.GetUpcomingDeliveriesCount(DateTime.Now),
                 RevenueByYear= await _dashboardService.GetRevenueByYearSum(DateTime.Now),
                 CashRecovery= await _dashboardService.GetTotalCashRecoverySum(),
+                RevenueModel = await _dashboardService.GetOrderRevenue()
             };
             return View(model);
         }
