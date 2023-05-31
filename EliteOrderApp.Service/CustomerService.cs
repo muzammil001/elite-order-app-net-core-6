@@ -32,7 +32,14 @@ public class CustomerService
 
     public async Task<bool> CheckCustomer(string mobileNumber)
     {
-      return await  _context.Customers.AnyAsync(x=>x.Contact==mobileNumber);
+        if (!string.IsNullOrWhiteSpace(mobileNumber))
+        {
+            return await _context.Customers.AnyAsync(x => x.Contact == mobileNumber);
+        }
+        else
+        {
+            return false;
+        }
     }
 
     public void UpdateCustomer(Customer customer)

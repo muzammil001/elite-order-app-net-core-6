@@ -9,7 +9,6 @@ namespace EliteOrderApp.Web.Dtos
         [Required]
         public string Name { get; set; }
 
-        [Required]
         public string Contact { get; set; }
     }
 }

@@ -61,6 +61,7 @@ namespace EliteOrderApp.Web.Controllers
                     {
                         return BadRequest("customer is already exists with same mobile number");
                     }
+
                     var customer = _mapper.Map<Customer>(customerDto);
                     await _customerService.NewCustomer(customer);
                 }
