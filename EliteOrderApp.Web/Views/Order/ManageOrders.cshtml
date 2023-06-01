@@ -2,6 +2,15 @@
 	ViewData["Title"] = "Manage Orders";
 	Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<style>
+	table.dataTable {
+		width: 100%;
+	}
+
+	.dropdown-item:hover{
+		background-color: #04a9f5;
+	}
+</style>
 <div class="card">
 	<div class="card-header">
 		<h3 class="m-b-10">Manage Orders</h3>
@@ -34,7 +43,7 @@
 							<th>Balance</th>
 							<th>Total Bill</th>
 							<th>Amount Received</th>
-							<th>Actions</th>
+							<th></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -115,11 +124,16 @@
 					data: "id",
 					render: function (data,type, order) {
 						return `<div class="pull-right">
-												<a href="/Order/OrderInvoice/${data}" target="blank" type="button" class="btn btn-icon btn-rounded btn-primary" data-orderItem-id=${data} title='View Invoice'><i class="feather icon-file-text"></i></button>` +
-							`<a href="/Order/EditOrder/${data}" type="button" class="btn btn-icon btn-rounded btn-info" title='Edit Order'><i class="feather icon-edit"></i></a>` +
-							`<a href="/Order/PaymentHistory/?orderId=${data}" target="blank" type="button" class="btn btn-icon btn-rounded btn-info" title='Payment History'><i class="fas fas fa-money-bill-alt"></i></a>` +
-							`<button type="button" class="btn btn-icon btn-rounded btn-success js-complete-order" data-orderItem-id=${data} title='Complete this Order'><i class="feather icon-check"></i></button>` +
-							`<button type="button" class="btn btn-icon btn-rounded btn-danger js-delete-order" data-orderItem-id=${data} title='Delete Order'><i class="feather icon-trash"></i></button></div>`;
+								<div class="btn-group mb-2 mr-2">
+										<button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Actions</button>
+								<div class="dropdown-menu">
+											<a class="dropdown-item text-info" target="_blank" href="/Order/OrderInvoice/${data}">View Invoice</a>
+									<a class="dropdown-item text-info" href="/Order/EditOrder/${data}">Edit Order</a>
+											<a class="dropdown-item" href="/Order/PaymentHistory/?orderId=${data}" target="_blank">Payment History</a>
+									<a type="button" class="dropdown-item js-complete-order text-success " data-orderItem-id=${data}  style="cursor:pointer" > Complete this Order</button>
+									<a type="button" class=" dropdown-item js-delete-order text-danger " data-orderItem-id=${data} style="cursor:pointer" > Delete Order</button></div>
+								</div>
+							`;
 
 					}
 				}
